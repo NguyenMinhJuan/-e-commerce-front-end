@@ -2,6 +2,8 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import paintImage from '../images/paint.png';
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function SignUpForm() {
     const [formData,setFormData] = React.useState({
@@ -9,7 +11,7 @@ function SignUpForm() {
         password:'',
         email:'',
         repeatPassword:''
-    })
+    });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,15 +24,20 @@ function SignUpForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (formData.password !== formData.repeatPassword) {
-            alert("Passwords do not match!");
+            toast.error('Password do not match');
             return;
         }
         try {
             const response = await axios.post('http://localhost:8001/api/user/signUp', formData);
-            alert('Sign up successful!');
+            toast(response.data);
         } catch (error) {
-            console.error('There was an error!', error);
-            alert('Sign up failed!');
+            if (error.response) {
+                toast.error('Invalid information!');
+            } else if (error.request) {
+                toast.error('No response from server');
+            } else {
+                toast.error('Error during signup');
+            }
         }
     };
 
@@ -87,6 +94,13 @@ function SignUpForm() {
                                                             <button type="submit" className="btn btn-primary btn-lg">Register</button>
                                                         </div>
                                                     </form>
+
+                                                    {/* Dòng "Already have an account?" */}
+                                                    <div className="text-center">
+                                                        <p className="text-muted">
+                                                            Already have an account? <a href="/signin" className="text-primary">Login here</a>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                                 <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
                                                     <img
