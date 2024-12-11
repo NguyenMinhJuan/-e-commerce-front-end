@@ -4,8 +4,10 @@ import signUpIcon from "../images/alligator.png";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import {useAuth} from "../context/AuthContext";
 
 function SignInForm() {
+  const {setIsLogin}=useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
@@ -27,12 +29,12 @@ function SignInForm() {
       toast.success("Welcome " + response.data.username);
       const { username, token, authorities } = response.data;
       const role = authorities && authorities.length > 0 ? authorities[0].authority : "defaultRole"; // Nếu không có role, sẽ là 'defaultRole'
-
+      setIsLogin(true);
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);
       localStorage.setItem("role", role);
       if (role.includes('ROLE_ADMIN')) {
-        navigate("/");
+        navigate("/admin");
       } else if (role.includes('ROLE_EMPLOYEE')) {
         navigate('/');
       } else if (role.includes('ROLE_MERCHANT')) {
