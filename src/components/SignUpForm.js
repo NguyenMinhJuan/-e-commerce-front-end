@@ -94,8 +94,6 @@ function SignUpForm() {
                                                             <button type="submit" className="btn btn-primary btn-lg">Register</button>
                                                         </div>
                                                     </form>
-
-                                                    {/* Dòng "Already have an account?" */}
                                                     <div className="text-center">
                                                         <p className="text-muted">
                                                             Already have an account? <a href="/signin" className="text-primary">Login here</a>

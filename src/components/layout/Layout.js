@@ -29,7 +29,7 @@ function Layout({ children }) {
                         <form onSubmit={handleSearch} className="search-form">
                             <input
                                 type="text"
-                                placeholder="Tìm kiếm sản phẩm..."
+                                placeholder="Search something..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 className="search-input"
@@ -39,7 +39,7 @@ function Layout({ children }) {
                             </button>
                         </form>
                         <nav className="nav-links">
-                            <Link to="/add-product" className="nav-link">Thêm sản phẩm</Link>
+                            <Link to="/signin" className="btn btn-primary nav-link">Sign-in</Link>
                         </nav>
                     </div>
                 </div>

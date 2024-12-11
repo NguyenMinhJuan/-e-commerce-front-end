@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import signUpIcon from "../images/snowman.png";
+import signUpIcon from "../images/alligator.png";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -124,7 +124,7 @@ function SignInForm() {
                                 </button>
                               </div>
                               <p className="text-center">
-                                new at UniTrade?{" "}
+                                Don't have an account?{" "}
                                 <a href="/signup" className="text-primary">
                                   Register
                                 </a>
