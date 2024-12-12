@@ -1,6 +1,5 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import signUpIcon from "../images/alligator.png"; // It seems like this is unused
 import axios from "axios"; // axios is imported but unused
 import { toast } from "react-toastify"; // toast is imported but unused
 import { useNavigate } from "react-router-dom"; // useNavigate is imported but unused
@@ -29,14 +28,6 @@ function Cart() {
                                                 <div>
                                                     <p className="mb-1">Shopping cart</p>
                                                     <p className="mb-0">You have 4 items in your cart</p>
-                                                </div>
-                                                <div>
-                                                    <p className="mb-0">
-                                                        <span className="text-muted">Sort by:</span>
-                                                        <a href="#!" className="text-body">
-                                                            price <i className="fas fa-angle-down mt-1"></i>
-                                                        </a>
-                                                    </p>
                                                 </div>
                                             </div>
 
@@ -77,7 +68,7 @@ function Cart() {
 
                                         {/* Card details */}
                                         <div className="col-lg-5">
-                                            <div className="card bg-primary text-white rounded-3">
+                                            <div className="card bg-danger text-white rounded-3">
                                                 <div className="card-body">
                                                     <div className="d-flex justify-content-between align-items-center mb-4">
                                                         <h5 className="mb-0">Card details</h5>
@@ -152,7 +143,7 @@ function Cart() {
                                                     </div>
 
                                                     <div className="d-flex justify-content-between mb-4">
-                                                        <p className="mb-2">Total (Incl. taxes)</p>
+                                                        <p className="mb-2">Total</p>
                                                         <p className="mb-2">$4818.00</p>
                                                     </div>
 
@@ -160,7 +151,7 @@ function Cart() {
                                                             className="btn btn-info btn-block btn-lg">
                                                         <div className="d-flex justify-content-between">
                                                             <span>$4818.00</span>
-                                                            <span>Checkout <i className="fas fa-long-arrow-alt-right ms-2"></i></span>
+                                                            <span>  <i className="fas fa-long-arrow-alt-right ms-2"></i></span>
                                                         </div>
                                                     </button>
 
