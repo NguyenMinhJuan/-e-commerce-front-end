@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { FaSearch } from 'react-icons/fa';
+import React, {useState} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
+import {FaSearch} from 'react-icons/fa';
 import './Layout.css';
+import {useAuth} from "../../context/AuthContext";
 
-function Layout({ children }) {
+function Layout({children}) {
+    const {isLogin} =useAuth();
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
 
@@ -23,23 +25,25 @@ function Layout({ children }) {
             <header className="header">
                 <div className="header-container">
                     <Link to="/" className="logo">
-                        <h1>UniTrade</h1>
+                        <h1>Amazon</h1>
                     </Link>
                     <div className="header-right">
                         <form onSubmit={handleSearch} className="search-form">
                             <input
                                 type="text"
-                                placeholder="Tìm kiếm sản phẩm..."
+                                placeholder="Search something..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 className="search-input"
                             />
                             <button type="submit" className="search-button">
-                                <FaSearch />
+                                <FaSearch/>
                             </button>
                         </form>
                         <nav className="nav-links">
-                            <Link to="/add-product" className="nav-link">Thêm sản phẩm</Link>
+                            {isLogin === false ?
+                                <Link to="/signin" className="btn btn-primary nav-link">Sign-in</Link> :
+                                <Link to="/logout" className="btn btn-primary nav-link">Logout</Link>}
                         </nav>
                     </div>
                 </div>
