@@ -40,7 +40,7 @@ function SignInForm() {
       } else if (role.includes('ROLE_MERCHANT')) {
         navigate('/');
       } else {
-        navigate('/');
+        navigate('/products');
       }
     } catch (error) {
       console.error("Error during registration:", error);
