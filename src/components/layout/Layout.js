@@ -25,7 +25,7 @@ function Layout({children}) {
             <header className="header">
                 <div className="header-container">
                     <Link to="/" className="logo">
-                        <h1>UniTrade</h1>
+                        <h1>Amazon</h1>
                     </Link>
                     <div className="header-right">
                         <form onSubmit={handleSearch} className="search-form">

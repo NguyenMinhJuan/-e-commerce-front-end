@@ -10,6 +10,7 @@ import Admin from "./components/Admin";
 import {AuthProvider} from "./context/AuthContext";
 import Logout from "./components/Logout";
 import Cart from "./components/Cart";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
     return (
@@ -25,8 +26,16 @@ function App() {
                         <Route path="/logout" element={<Logout/>}/>
                         <Route path="/products" element={<ProductList/>}/>
                         <Route path="/" element={<ProductList/>}/>
-                        <Route path="/admin" element={<Admin/>}/>
                         <Route path="/cart" element={<Cart/>}/>
+                        <Route
+                            path="/admin"
+                            element={
+                                <PrivateRoute
+                                    requiredRole="admin"
+                                    element={<Admin/>}
+                                />
+                            }
+                        />
                         <Route path="*" element={<div>404 - Page not found</div>}/>
                     </Routes>
                 </Layout>
