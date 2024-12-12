@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import signUpIcon from "../images/alligator.png";
+import signUpIcon from "../../images/alligator.png";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import {useAuth} from "../context/AuthContext";
+import {useAuth} from "../../context/AuthContext";
 
 function SignInForm() {
   const {setIsLogin}=useAuth();
@@ -40,7 +40,7 @@ function SignInForm() {
       } else if (role.includes('ROLE_MERCHANT')) {
         navigate('/');
       } else {
-        navigate('/');
+        navigate('/products');
       }
     } catch (error) {
       console.error("Error during registration:", error);
