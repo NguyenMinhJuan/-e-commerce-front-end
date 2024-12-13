@@ -20,6 +20,16 @@ function Layout({ children }) {
         }
     };
 
+    const handleCart=()=>{
+        if(isLogin===true)
+        {
+            navigate("/cart")
+        }
+        else {
+            navigate("/singin")
+        }
+    }
+
     return (
         <div className="layout">
             <header className="header">
@@ -53,7 +63,7 @@ function Layout({ children }) {
                                 </Link>
                             )}
                             {/* Cart Icon */}
-                            <Link to="/cart" className="cart-icon nav-link">
+                            <Link to="/cart" className="cart-icon nav-link" onClick={handleCart}>
                                 <FaShoppingCart size={24} />
                                 <span>Cart</span>
                             </Link>
@@ -87,7 +97,7 @@ function Layout({ children }) {
                     </div>
                 </div>
                 <div className="footer-bottom">
-                    <p>&copy; 2024 UniTrade. All rights reserved.</p>
+                    <p>&copy; 2024 Amazon. All rights reserved.</p>
                 </div>
             </footer>
         </div>

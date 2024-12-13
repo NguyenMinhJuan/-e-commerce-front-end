@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom"; // useNavigate is imported but u
 
 function Cart() {
 
+
+
     return (
         <>
             <section className="h-100 h-custom">
