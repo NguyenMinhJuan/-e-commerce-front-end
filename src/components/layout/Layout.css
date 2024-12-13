@@ -176,3 +176,20 @@
 .search-button:hover {
     background: #2980b9;
 }
+.cart-icon {
+    color: white; /* Makes the icon white */
+    font-size: 2rem; /* Increases the size (2 times the default size) */
+}
+.bi-person {
+    font-size: 1.8rem; /* Make the icon bigger */
+    margin-right: 8px;  /* Adds space between the icon and text */
+    color:white;
+}
+
+.sign-in-icon {
+    font-size: 1.8rem; /* Makes the icon bigger */
+    margin-right: 8px;  /* Adds space between the icon and text */
+    color: white; /* Changes the icon color to white */
+}
+
+

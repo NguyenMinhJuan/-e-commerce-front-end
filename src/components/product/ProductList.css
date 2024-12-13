@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
-
+/* Body and general styles */
 body {
     font-family: "Poppins", sans-serif;
     color: #444444;
+    background-color: #f9f9f9;
 }
 
 a,
@@ -11,12 +11,14 @@ a:hover {
     color: inherit;
 }
 
+/* Section and grid styles */
 .section-products {
-    padding: 80px 0 54px;
+    padding: 40px 0;
 }
 
 .section-products .header {
-    margin-bottom: 50px;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 .section-products .header h3 {
@@ -26,136 +28,124 @@ a:hover {
 }
 
 .section-products .header h2 {
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 400;
     color: #444444;
 }
 
-.section-products .single-product {
-    margin-bottom: 26px;
+/* Product grid using flexbox for smaller cards */
+.section-products .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjusted for smaller cards */
+    gap: 15px; /* Reduced gap between cards */
 }
 
-.section-products .single-product .part-1 {
-    position: relative;
-    height: 290px;
-    max-height: 290px;
-    margin-bottom: 20px;
-    overflow: hidden;
-}
-
-.section-products .single-product .part-1::before {
-    position: absolute;
-    content: "";
-    top: 0;
-    left: 0;
+/* Card styling - smaller size */
+.fixed-size-card {
+    max-width: 100%;
     width: 100%;
-    height: 100%;
-    z-index: -1;
-    transition: all 0.3s;
+    height: 100%; /* Set to auto to keep aspect ratio */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 8px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+    /* Reduced card padding for a more compact layout */
+    padding: 10px;
 }
 
-.section-products .single-product:hover .part-1::before {
-    transform: scale(1.2,1.2) rotate(5deg);
+.fixed-size-card:hover {
+    transform: translateY(-8px); /* Reduced hover effect */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Slightly softer shadow */
 }
 
-.section-products #product-1 .part-1::before {
-    background: url("https://i.ibb.co/L8Nrb7p/1.jpg") no-repeat center;
-    background-size: cover;
-    transition: all 0.3s;
+/* Image styling */
+.fixed-size-card .card-img-top {
+    height: 180px; /* Reduced height for smaller cards */
+    width: 100%;
+    object-fit: cover;
 }
 
-.section-products #product-2 .part-1::before {
-    background: url("https://i.ibb.co/cLnZjnS/2.jpg") no-repeat center;
-    background-size: cover;
+/* Card body styling */
+.fixed-size-card .card-body {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
-.section-products #product-3 .part-1::before {
-    background: url("https://i.ibb.co/L8Nrb7p/1.jpg") no-repeat center;
-    background-size: cover;
-}
-
-.section-products #product-4 .part-1::before {
-    background: url("https://i.ibb.co/cLnZjnS/2.jpg") no-repeat center;
-    background-size: cover;
-}
-
-.section-products .single-product .part-1 .discount,
-.section-products .single-product .part-1 .new {
-    position: absolute;
-    top: 15px;
-    left: 20px;
-    color: #ffffff;
-    background-color: #fe302f;
-    padding: 2px 8px;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-}
-
-.section-products .single-product .part-1 .new {
-    left: 0;
-    background-color: #444444;
-}
-
-.section-products .single-product .part-1 ul {
-    position: absolute;
-    bottom: -41px;
-    left: 20px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    opacity: 0;
-    transition: bottom 0.5s, opacity 0.5s;
-}
-
-.section-products .single-product:hover .part-1 ul {
-    bottom: 30px;
-    opacity: 1;
-}
-
-.section-products .single-product .part-1 ul li {
-    display: inline-block;
-    margin-right: 4px;
-}
-
-.section-products .single-product .part-1 ul li a {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    background-color: #ffffff;
+/* Card title and text */
+.fixed-size-card .card-title {
+    font-size: 1rem; /* Smaller title */
+    font-weight: 600;
     color: #444444;
-    text-align: center;
-    box-shadow: 0 2px 20px rgb(50 50 50 / 10%);
-    transition: color 0.2s;
+    margin-bottom: 8px;
 }
 
-.section-products .single-product .part-1 ul li a:hover {
+.fixed-size-card .card-text {
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.9rem; /* Smaller text for description */
+}
+
+/* Price section */
+.fixed-size-card .card-footer {
+    padding: 5px 10px;
+    background-color: #f1f1f1;
+    border-top: 1px solid #e5e5e5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fixed-size-card .price {
+    font-size: 1rem; /* Adjusted price size */
+    font-weight: 700;
     color: #fe302f;
 }
 
-.section-products .single-product .part-2 .product-title {
-    font-size: 1rem;
+/* Pagination styling */
+.pagination-container {
+    margin-top: 20px;
 }
 
-.section-products .single-product .part-2 h4 {
-    display: inline-block;
-    font-size: 1rem;
+.pagination {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    justify-content: center;
 }
 
-.section-products .single-product .part-2 .product-old-price {
-    position: relative;
-    padding: 0 7px;
-    margin-right: 2px;
-    opacity: 0.6;
+.pagination .page-item {
+    margin: 0 5px;
 }
 
-.section-products .single-product .part-2 .product-old-price::after {
-    position: absolute;
-    content: "";
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: #444444;
-    transform: translateY(-50%);
+.pagination .page-link {
+    padding: 8px 15px;
+    color: #007bff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #ddd;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+}
+
+.page-link:hover {
+    background-color: #0056b3;
+    color: white;
 }
