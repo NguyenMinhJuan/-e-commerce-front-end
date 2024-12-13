@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
-import {FaSearch} from 'react-icons/fa';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa'; // Imported FaUser for login icon
 import './Layout.css';
-import {useAuth} from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
-function Layout({children}) {
-    const {isLogin} =useAuth();
+function Layout({ children }) {
+    const { isLogin } = useAuth();
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
 
@@ -19,6 +19,16 @@ function Layout({children}) {
             navigate(searchUrl);
         }
     };
+
+    const handleCart=()=>{
+        if(isLogin===true)
+        {
+            navigate("/cart")
+        }
+        else {
+            navigate("/singin")
+        }
+    }
 
     return (
         <div className="layout">
@@ -37,13 +47,26 @@ function Layout({children}) {
                                 className="search-input"
                             />
                             <button type="submit" className="search-button">
-                                <FaSearch/>
+                                <FaSearch />
                             </button>
                         </form>
                         <nav className="nav-links">
-                            {isLogin === false ?
-                                <Link to="/signin" className="btn btn-primary nav-link">Sign-in</Link> :
-                                <Link to="/logout" className="btn btn-primary nav-link">Logout</Link>}
+                            {/* Conditional rendering for login/logout icons */}
+                            {isLogin === false ? (
+                                <Link to="/signin" className="nav-link">
+                                    <FaUser size={24} color="white" /> {/* Login icon */}
+                                    <span>Login</span>
+                                </Link>
+                            ) : (
+                                <Link to="/logout" className="nav-link">
+                                    <span>Logout</span>
+                                </Link>
+                            )}
+                            {/* Cart Icon */}
+                            <Link to="/cart" className="cart-icon nav-link" onClick={handleCart}>
+                                <FaShoppingCart size={24} />
+                                <span>Cart</span>
+                            </Link>
                         </nav>
                     </div>
                 </div>
@@ -74,7 +97,7 @@ function Layout({children}) {
                     </div>
                 </div>
                 <div className="footer-bottom">
-                    <p>&copy; 2024 UniTrade. All rights reserved.</p>
+                    <p>&copy; 2024 Amazon. All rights reserved.</p>
                 </div>
             </footer>
         </div>

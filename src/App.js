@@ -6,7 +6,7 @@ import ProductDetail from './components/product/ProductDetail';
 import EditProduct from './components/product/EditProduct';
 import SignInForm from './components/Security/SignInForm';
 import SignUpForm from "./components/Security/SignUpForm";
-import Admin from "./components/Admin";
+import Admin from "./components/admin/Admin";
 import {AuthProvider} from "./context/AuthContext";
 import Logout from "./components/Security/Logout";
 import Cart from "./components/Cart";
@@ -19,8 +19,8 @@ function App() {
                 <Layout>
                     <Routes>
                         <Route path="/add-product" element={<AddProduct/>}/>
-                        <Route path="/product/edit/:id" element={<EditProduct/>}/>
-                        <Route path="/product/:id" element={<ProductDetail/>}/>
+                        <Route path="/products/edit/:id" element={<EditProduct/>}/>
+                        <Route path="/products/:id" element={<ProductDetail/>}/>
                         <Route path="/signin" element={<SignInForm/>}/>
                         <Route path="/signup" element={<SignUpForm/>}/>
                         <Route path="/logout" element={<Logout/>}/>

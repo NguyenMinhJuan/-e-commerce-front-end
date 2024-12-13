@@ -1,0 +1,79 @@
+/* Sidebar Style */
+.admin-sidebar {
+    width: 250px;              /* Đặt chiều rộng của sidebar */
+    height: 100vh;             /* Chiều cao full viewport */
+    background-color: #343a40;
+    color: white;
+    position: fixed;           /* Để sidebar cố định khi cuộn trang */
+    top: 0;
+    left: 0;
+    padding-top: 30px;         /* Padding cho phần đầu sidebar */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;             /* Đảm bảo sidebar luôn hiển thị trên các phần tử khác */
+}
+
+/* Main Content */
+.admin-main-content {
+    margin-left: 250px;        /* Đảm bảo nội dung không bị che khuất bởi sidebar */
+    padding: 20px;
+    flex: 1;
+    transition: margin-left 0.3s ease-in-out;  /* Thêm hiệu ứng chuyển động khi sidebar thay đổi */
+}
+
+/* Phần tiêu đề của sidebar */
+.sidebar-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar-header h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #f8f9fa;
+}
+
+/* Cập nhật layout cho phần navbar */
+.nav-link {
+    color: #f8f9fa;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: #495057;
+    border-radius: 5px;
+}
+
+.nav-link.active {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Thêm hiệu ứng cho các icon trong sidebar */
+.nav-link svg {
+    margin-right: 10px;
+}
+
+/* Đảm bảo sidebar không bị chồng lên nội dung */
+@media (max-width: 768px) {
+    .admin-sidebar {
+        width: 200px;
+    }
+
+    .sidebar-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .nav-link {
+        font-size: 1rem;
+    }
+
+    /* Cho phần nội dung chính khi sidebar thu nhỏ */
+    .admin-main-content {
+        margin-left: 200px;
+    }
+}

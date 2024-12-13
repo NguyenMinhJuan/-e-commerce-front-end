@@ -5,6 +5,9 @@ import { toast } from "react-toastify"; // toast is imported but unused
 import { useNavigate } from "react-router-dom"; // useNavigate is imported but unused
 
 function Cart() {
+
+
+
     return (
         <>
             <section className="h-100 h-custom">
