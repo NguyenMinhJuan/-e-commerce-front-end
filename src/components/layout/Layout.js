@@ -45,13 +45,17 @@ function Layout({ children }) {
                             {isLogin === false ? (
                                 <Link to="/signin" className="nav-link">
                                     <FaUser size={24} color="white" /> {/* Login icon */}
+                                    <span>Login</span>
                                 </Link>
                             ) : (
-                                <Link to="/logout" className="nav-link">Logout</Link>
+                                <Link to="/logout" className="nav-link">
+                                    <span>Logout</span>
+                                </Link>
                             )}
                             {/* Cart Icon */}
-                            <Link to="/cart" className="cart-icon">
+                            <Link to="/cart" className="cart-icon nav-link">
                                 <FaShoppingCart size={24} />
+                                <span>Cart</span>
                             </Link>
                         </nav>
                     </div>
