@@ -16,8 +16,8 @@ function App() {
     return (
         <AuthProvider>
             <Router>
-                <Layout>
-                    <Routes>
+                <Routes>
+                    <Route path="/" element={<Layout/>}>
                         <Route path="/add-product" element={<AddProduct/>}/>
                         <Route path="/products/edit/:id" element={<EditProduct/>}/>
                         <Route path="/products/:id" element={<ProductDetail/>}/>
@@ -27,11 +27,11 @@ function App() {
                         <Route path="/products" element={<ProductList/>}/>
                         <Route path="/" element={<ProductList/>}/>
                         <Route path="/cart" element={<Cart/>}/>
-                        <Route path="/admin" element={<Admin/>}/>
-                        />
-                        <Route path="*" element={<div>404 - Page not found</div>}/>
-                    </Routes>
-                </Layout>
+                    </Route>
+                    <Route path="/admin" element={<Admin/>}/>
+                    />
+                    <Route path="*" element={<div>404 - Page not found</div>}/>
+                </Routes>
             </Router>
         </AuthProvider>
     );

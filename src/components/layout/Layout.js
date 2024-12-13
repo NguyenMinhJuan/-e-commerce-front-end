@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {Link, Outlet, useNavigate} from 'react-router-dom';
 import { FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa'; // Imported FaUser for login icon
 import './Layout.css';
 import { useAuth } from "../../context/AuthContext";
@@ -26,7 +26,7 @@ function Layout({ children }) {
             navigate("/cart")
         }
         else {
-            navigate("/singin")
+            navigate("/signin")
         }
     }
 
@@ -73,7 +73,7 @@ function Layout({ children }) {
             </header>
 
             <main className="main-content">
-                {children}
+                <Outlet />
             </main>
 
             <footer className="footer">
