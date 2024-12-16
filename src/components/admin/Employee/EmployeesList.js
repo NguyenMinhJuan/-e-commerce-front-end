@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -14,7 +14,9 @@ export function EmployeesList() {
 
     return (
         <>
-            <h3 className="text-center pb-5">Employee management</h3>
+<span className="badge badge-danger d-flex justify-content-center align-items-center text-dark fs-4 pb-5">
+  Employee management
+</span>
             <table className="table table-striped table-dark">
                 <thead>
                 <tr>
@@ -33,10 +35,14 @@ export function EmployeesList() {
                 {employees.map((user) => (
                     <tr key={user.id}>
                         <td>{user.id}</td>
-                        <td>{user.name || 'N/A'}</td> {/* Nếu không có tên, hiển thị 'N/A' */}
-                        <td>{user.phone || 'N/A'}</td> {/* Hiển thị nếu không có số điện thoại */}
-                        <td>{user.address || 'N/A'}</td> {/* Hiển thị nếu không có địa chỉ */}
-                        <td>{user.salary ? user.salary.toLocaleString() : 'N/A'}</td> {/* Định dạng tiền tệ nếu có */}
+                        <td>{user.name || 'N/A'}</td>
+                        {/* Nếu không có tên, hiển thị 'N/A' */}
+                        <td>{user.phone || 'N/A'}</td>
+                        {/* Hiển thị nếu không có số điện thoại */}
+                        <td>{user.address || 'N/A'}</td>
+                        {/* Hiển thị nếu không có địa chỉ */}
+                        <td>{user.salary ? user.salary.toLocaleString() : 'N/A'}</td>
+                        {/* Định dạng tiền tệ nếu có */}
                         <td>{user.user.username}</td>
                         <td>{user.user.email}</td>
                         <td>
