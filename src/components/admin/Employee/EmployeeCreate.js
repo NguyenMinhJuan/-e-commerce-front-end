@@ -3,7 +3,6 @@ import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export function EmployeesCreate() {
-    // State to store form data
     const [newEmployee, setNewEmployee] = useState({
         name: '',
         age: '',
@@ -12,10 +11,8 @@ export function EmployeesCreate() {
         salary: '',
     });
 
-    // State to handle form submission status or error
     const [message, setMessage] = useState('');
 
-    // Handle form input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setNewEmployee(prevState => ({
@@ -24,7 +21,6 @@ export function EmployeesCreate() {
         }));
     };
 
-    // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -32,7 +28,6 @@ export function EmployeesCreate() {
         axios.post("http://localhost:8001/api/admin/employees", newEmployee)
             .then(response => {
                 setMessage('Employee created successfully!');
-                // Optionally, reset the form
                 setNewEmployee({
                     name: '',
                     age: '',

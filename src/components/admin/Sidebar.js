@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaTachometerAlt, FaCogs, FaUsers, FaBox, FaChartLine, FaSignOutAlt, FaList, FaPlusCircle } from 'react-icons/fa';
+import {FaRegBuilding, FaUsers, FaBox, FaSignOutAlt, FaList, FaPlusCircle } from 'react-icons/fa';
 
 const Sidebar = () => {
     const [isEmployeeMenuOpen, setIsEmployeeMenuOpen] = useState(false);
@@ -16,9 +16,6 @@ const Sidebar = () => {
                 <h3>ADMIN</h3>
             </div>
             <ul className="list-unstyled">
-                <li><Link to="#" className="nav-link"><FaTachometerAlt /> Dashboard</Link></li>
-                <li><Link to="#" className="nav-link"><FaCogs /> Settings</Link></li>
-
                 {/* Employees menu with sub-menu */}
                 <li>
                     <a href="#" className="nav-link" onClick={toggleEmployeeMenu}>
@@ -30,9 +27,8 @@ const Sidebar = () => {
                         <li><Link to="/admin/employees/add" className="nav-link"><FaPlusCircle /> Add New Employee</Link></li>
                     </ul>
                 </li>
-
-                <li><Link to="#" className="nav-link"><FaBox /> Products</Link></li>
-                <li><Link to="#" className="nav-link"><FaChartLine /> Analytics</Link></li>
+                <li><Link to="#" className="nav-link"><FaRegBuilding />
+                    Merchant</Link></li>
                 <li><Link to="/logout" className="nav-link"><FaSignOutAlt /> Logout</Link></li>
             </ul>
         </div>
