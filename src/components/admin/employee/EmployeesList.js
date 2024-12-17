@@ -3,6 +3,8 @@ import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { confirmAlert } from 'react-confirm-alert'; // Import confirmAlert
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import CSS để styling
+import { ToastContainer, toast } from 'react-toastify';
+
 
 export function EmployeesList() {
     const [employees, setEmployees] = useState([]);
