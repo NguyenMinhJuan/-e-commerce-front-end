@@ -51,7 +51,7 @@ export function EmployeesList() {
                     <th>Email</th>
                     <th>Role</th>
                     <th>Profile pic</th>
-                    <th></th>
+                    <th>Status</th>
                     <th colSpan={2}>Action</th>
                 </tr>
                 </thead>
@@ -72,12 +72,15 @@ export function EmployeesList() {
                             <img className="h-25 w-25" src={user.user.imgUrl} alt="avatar"></img>
                         </td>
                         <td>
+                            {user.user.accountStatus}
+                        </td>
+                        <td>
                             <button className="btn btn-outline-danger btn-sm" onClick={()=>{
                                 handleDelete(user.user.id);
                             }}>Delete</button>
                         </td>
                         <td>
-                            <button className="btn btn-outline-success btn-sm">Update</button>
+                            <button className="btn btn-outline-success btn-sm">Active/Inactive</button>
                         </td>
                     </tr>
                 ))}

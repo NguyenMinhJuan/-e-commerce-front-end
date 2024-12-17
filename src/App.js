@@ -4,14 +4,14 @@ import ProductList from './components/product/ProductList';
 import AddProduct from './components/product/AddProduct';
 import ProductDetail from './components/product/ProductDetail';
 import EditProduct from './components/product/EditProduct';
-import SignInForm from './components/Security/SignInForm';
-import SignUpForm from './components/Security/SignUpForm';
+import SignInForm from './components/security/SignInForm';
+import SignUpForm from './components/security/SignUpForm';
 import AdminLayout from './components/admin/AdminLayout';  // Layout chung cho admin
 import { AuthProvider } from './context/AuthContext';
-import Logout from './components/Security/Logout';
+import Logout from './components/security/Logout';
 import Cart from './components/cart/Cart';
-import {EmployeesList} from "./components/admin/Employee/EmployeesList";
-import {EmployeesCreate} from "./components/admin/Employee/EmployeeCreate";
+import {EmployeesList} from "./components/admin/employee/EmployeesList";
+import {EmployeesCreate} from "./components/admin/employee/EmployeeCreate";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 

@@ -27,6 +27,17 @@ const Sidebar = () => {
                         <li><Link to="/admin/employees/add" className="nav-link"><FaPlusCircle /> Add New Employee</Link></li>
                     </ul>
                 </li>
+                {/* Users menu with sub-menu */}
+                <li>
+                    <a href="#" className="nav-link" onClick={toggleEmployeeMenu}>
+                        <FaUsers /> Users
+                    </a>
+                    {/* Collapsible sub-menu */}
+                    <ul className={`sub-menu ${isEmployeeMenuOpen ? 'show' : ''}`}>
+                        <li><Link to="/admin/users" className="nav-link"><FaList /> User List</Link></li>
+                        <li><Link to="/admin/employees/add" className="nav-link"><FaPlusCircle /> Add New Employee</Link></li>
+                    </ul>
+                </li>
                 <li><Link to="#" className="nav-link"><FaRegBuilding />
                     Merchant</Link></li>
                 <li>
