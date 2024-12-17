@@ -27,7 +27,7 @@ export function EmployeesCreate() {
         // Send POST request to create a new employee
         axios.post("http://localhost:8001/api/admin/employees", newEmployee)
             .then(response => {
-                setMessage('Employee created successfully!');
+                setMessage('employee created successfully!');
                 setNewEmployee({
                     name: '',
                     age: '',

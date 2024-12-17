@@ -47,7 +47,6 @@ function SignUpForm() {
 
     return (
         <>
-            <ToastContainer />
             <div className="container-fluid vh-100 d-flex justify-content-center align-items-center">
                 <div className="login-form text-center p-4"
                      style={{ borderRadius: '8px', width: '80%', maxWidth: '1000px', backgroundColor: 'rgba(255, 255, 255, 0.7)' }}>

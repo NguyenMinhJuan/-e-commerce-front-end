@@ -9,6 +9,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <>
         <App/>
-        <ToastContainer/>
+        <ToastContainer position="bottom-right"/>
     </>
 );
