@@ -14,6 +14,7 @@ a:hover {
 /* Section and grid styles */
 .section-products {
     padding: 40px 0;
+    background-color: #f8f9fa;
 }
 
 .section-products .header {
@@ -40,6 +41,19 @@ a:hover {
     gap: 15px; /* Reduced gap between cards */
 }
 
+.product-card {
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+    height: 100%;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
 /* Card styling - smaller size */
 .fixed-size-card {
     max-width: 100%;
@@ -62,6 +76,27 @@ a:hover {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Slightly softer shadow */
 }
 
+.img-container {
+    position: relative;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.product-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-img {
+    transform: scale(1.05);
+}
+
 /* Image styling */
 .fixed-size-card .card-img-top {
     height: 180px; /* Reduced height for smaller cards */
@@ -78,11 +113,27 @@ a:hover {
 }
 
 /* Card title and text */
+.card-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
 .fixed-size-card .card-title {
     font-size: 1rem; /* Smaller title */
     font-weight: 600;
     color: #444444;
     margin-bottom: 8px;
+}
+
+.description-truncate {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
 }
 
 .fixed-size-card .card-text {
@@ -96,6 +147,12 @@ a:hover {
 }
 
 /* Price section */
+.price {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
 .fixed-size-card .card-footer {
     padding: 5px 10px;
     background-color: #f1f1f1;
@@ -113,7 +170,7 @@ a:hover {
 
 /* Pagination styling */
 .pagination-container {
-    margin-top: 20px;
+    margin-top: 2rem;
 }
 
 .pagination {
@@ -129,7 +186,8 @@ a:hover {
 
 .pagination .page-link {
     padding: 8px 15px;
-    color: #007bff;
+    color: #2c3e50;
+    border-color: #dee2e6;
     border: 1px solid #ddd;
     border-radius: 4px;
     text-decoration: none;
@@ -141,7 +199,8 @@ a:hover {
 }
 
 .pagination .page-item.active .page-link {
-    background-color: #007bff;
+    background-color: #2c3e50;
+    border-color: #2c3e50;
     color: white;
 }
 

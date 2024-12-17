@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Link, Outlet, useNavigate} from 'react-router-dom';
-import { FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa'; // Imported FaUser for login icon
+import { FaSearch, FaShoppingCart, FaUser, FaCaretDown } from 'react-icons/fa';
 import './Layout.css';
 import { useAuth } from "../../context/AuthContext";
 
 function Layout({ children }) {
-    const { isLogin } = useAuth();
+    const { isLogin, user } = useAuth();
     const [searchTerm, setSearchTerm] = useState('');
+    const [showDropdown, setShowDropdown] = useState(false);
     const navigate = useNavigate();
 
     const handleSearch = (e) => {
@@ -20,15 +21,35 @@ function Layout({ children }) {
         }
     };
 
-    const handleCart=()=>{
-        if(isLogin===true)
-        {
-            navigate("/cart")
+    const handleCart = () => {
+        if(isLogin === true) {
+            navigate("/cart");
+        } else {
+            navigate("/signin");
         }
-        else {
-            navigate("/signin")
+    };
+
+    const handleLogout = () => {
+        navigate("/logout");
+        setShowDropdown(false);
+    };
+
+    const toggleDropdown = () => {
+        setShowDropdown(!showDropdown);
+    };
+
+    const handleClickOutside = (e) => {
+        if (!e.target.closest('.user-dropdown-container')) {
+            setShowDropdown(false);
         }
-    }
+    };
+
+    React.useEffect(() => {
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
 
     return (
         <div className="layout">
@@ -51,18 +72,41 @@ function Layout({ children }) {
                             </button>
                         </form>
                         <nav className="nav-links">
-                            {/* Conditional rendering for login/logout icons */}
                             {isLogin === false ? (
                                 <Link to="/signin" className="nav-link">
-                                    <FaUser size={24} color="white" /> {/* Login icon */}
+                                    <FaUser size={24} color="white" />
                                     <span>Login</span>
                                 </Link>
                             ) : (
-                                <Link to="/logout" className="nav-link">
-                                    <span>Logout</span>
-                                </Link>
+                                <div className="user-dropdown-container">
+                                    <button className="user-dropdown-button" onClick={toggleDropdown}>
+                                        <FaUser size={24} />
+                                        <span>{user?.username}</span>
+                                        <FaCaretDown />
+                                    </button>
+                                    {showDropdown && (
+                                        <div className="user-dropdown-menu">
+                                            {user?.role === 'ROLE_ADMIN' && (
+                                                <>
+                                                    <a 
+                                                        href="http://localhost:3000/admin"
+                                                        className="dropdown-item"
+                                                        onClick={() => setShowDropdown(false)}
+                                                    >
+                                                        Admin Dashboard
+                                                    </a>
+                                                </>
+                                            )}
+                                            <button 
+                                                className="dropdown-item"
+                                                onClick={handleLogout}
+                                            >
+                                                Log out
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
                             )}
-                            {/* Cart Icon */}
                             <Link to="/cart" className="cart-icon nav-link" onClick={handleCart}>
                                 <FaShoppingCart size={24} />
                                 <span>Cart</span>

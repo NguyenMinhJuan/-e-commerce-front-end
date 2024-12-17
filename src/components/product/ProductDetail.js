@@ -1,33 +1,36 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './ProductDetail.css';
 import axios from 'axios';
 import altImg from "../../images/altImg.png";
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
-import Slider from "react-slick";
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
-// Custom hook for fetching product data
-const useProductData = (id) => {
+function ProductDetail() {
+    const navigate = useNavigate();
+    const { isLogin } = useAuth();
+    const { id } = useParams();
     const [product, setProduct] = useState(null);
-    const [productImage, setProductImage] = useState(null);
+    const [images, setImages] = useState([]);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchProductData = async () => {
             try {
-                const [productResponse, imageResponse] = await Promise.all([
+                const [productResponse, imagesResponse] = await Promise.all([
                     axios.get(`http://localhost:8001/api/products/${id}`),
                     axios.get(`http://localhost:8001/api/images/${id}`)
                 ]);
 
                 setProduct(productResponse.data);
-                setProductImage(imageResponse.data);
+                setImages(imagesResponse.data.length > 0 
+                    ? imagesResponse.data 
+                    : [{ imgUrl: altImg }]);
                 setLoading(false);
-            } catch (err) {
-                console.error("Error fetching product data:", err);
-                setError(err);
+            } catch (error) {
+                console.error("Error fetching product data:", error);
                 setLoading(false);
             }
         };
@@ -35,96 +38,128 @@ const useProductData = (id) => {
         fetchProductData();
     }, [id]);
 
-    return { product, productImage, loading, error };
-};
+    const handlePrevImage = () => {
+        setCurrentImageIndex(prevIndex => 
+            prevIndex === 0 ? images.length - 1 : prevIndex - 1
+        );
+    };
 
-function ProductDetail() {
-    const navigate = useNavigate();
-    const { isLogin } = useAuth();
-    const { id } = useParams();
+    const handleNextImage = () => {
+        setCurrentImageIndex(prevIndex => 
+            prevIndex === images.length - 1 ? 0 : prevIndex + 1
+        );
+    };
 
-    const { product, productImage, loading, error } = useProductData(id);
+    const handleThumbnailClick = (index) => {
+        setCurrentImageIndex(index);
+    };
 
-    // Memoized carousel settings to prevent re-creation on every render
-    const carouselSettings = useMemo(() => ({
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        fade: true,
-    }), []);
-
-    // Memoized add to cart handler
     const handleAddToCart = useCallback(() => {
         if (!isLogin) {
             navigate('/signin');
-            toast.info("You need to be logged in!");
+            toast.info("Bạn cần đăng nhập để thêm vào giỏ hàng!");
         } else {
-            toast.success("Add new cart successfully!");
+            toast.success("Đã thêm sản phẩm vào giỏ hàng!");
         }
     }, [isLogin, navigate]);
 
     if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error loading product details</div>;
+        return (
+            <div className="loading-container">
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        );
     }
 
     if (!product) {
-        return <div>No product found</div>;
+        return <div className="error-message">Không tìm thấy sản phẩm</div>;
     }
 
     return (
-        <section className="section-product-detail">
+        <div className="product-detail-container">
             <div className="container">
                 <div className="row">
-                    <div className="col-md-6 product-detail-left">
-                        <Slider {...carouselSettings}>
-                            {productImage && productImage.length > 0 ? (
-                                productImage.map((image, index) => (
-                                    <div key={index} className="carousel-item">
-                                        <img
-                                            src={image.imgUrl || altImg}
-                                            className="img-fluid"
-                                            alt={`Product image ${index + 1}`}
-                                        />
-                                    </div>
-                                ))
-                            ) : (
-                                <div>
-                                    <img
-                                        src={product.imageUrl || altImg}
-                                        className="img-fluid"
-                                        alt={product.name || "Product image"}
-                                    />
+                    <div className="col-md-7">
+                        <div className="product-gallery">
+                            <div className="main-image-wrapper">
+                                <img
+                                    src={images[currentImageIndex]?.imgUrl || altImg}
+                                    alt={product.name}
+                                    className="main-image"
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = altImg;
+                                    }}
+                                />
+                                
+                                {images.length > 1 && (
+                                    <>
+                                        <button 
+                                            className="gallery-nav prev"
+                                            onClick={handlePrevImage}
+                                            aria-label="Previous image"
+                                        >
+                                            <FaArrowLeft />
+                                        </button>
+                                        <button 
+                                            className="gallery-nav next"
+                                            onClick={handleNextImage}
+                                            aria-label="Next image"
+                                        >
+                                            <FaArrowRight />
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+
+                            {images.length > 1 && (
+                                <div className="thumbnails-container">
+                                    {images.map((image, index) => (
+                                        <div 
+                                            key={index}
+                                            className={`thumbnail ${currentImageIndex === index ? 'active' : ''}`}
+                                            onClick={() => handleThumbnailClick(index)}
+                                        >
+                                            <img
+                                                src={image.imgUrl || altImg}
+                                                alt={`${product.name} thumbnail ${index + 1}`}
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+                                                    e.target.src = altImg;
+                                                }}
+                                            />
+                                        </div>
+                                    ))}
                                 </div>
                             )}
-                        </Slider>
+                        </div>
                     </div>
-                    <div className="col-md-6 product-detail-right">
-                        <h1 className="product-title">{product.name}</h1>
-                        <p className="product-description">{product.description}</p>
-                        <div className="product-price">
-                            <span className="h4">${product.price}</span>
+
+                    <div className="col-md-5">
+                        <div className="product-info">
+                            <h1 className="product-title">{product.name}</h1>
+                            <div className="product-price">${product.price}</div>
+                            
+                            <div className="product-description">
+                                <h3>Mô tả sản phẩm</h3>
+                                <p>{product.description}</p>
+                            </div>
+
+                            <div className="product-actions">
+                                <button 
+                                    className="btn-add-to-cart"
+                                    onClick={handleAddToCart}
+                                >
+                                    Thêm vào giỏ hàng
+                                </button>
+                            </div>
                         </div>
-                        <div className="product-details">
-                            <p><strong>Category:</strong> {product.category.name}</p>
-                            <p><strong>Stock:</strong> {product.quantity}</p>
-                            <p><strong>Brand:</strong> {product.brand}</p>
-                            <p><strong>Details:</strong> {product.details}</p>
-                        </div>
-                        <button className="btn btn-primary" onClick={handleAddToCart}>
-                            Add to Cart
-                        </button>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     );
 }
 
