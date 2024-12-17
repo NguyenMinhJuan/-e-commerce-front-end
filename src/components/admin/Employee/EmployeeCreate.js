@@ -46,7 +46,7 @@ export function EmployeesCreate() {
         <div className="container my-4">
             <div className="d-flex justify-content-center align-items-center">
                 <div className="col-md-6 col-lg-4 p-4 border rounded shadow-sm">
-                    <h2 className="text-center mb-4">Add New Employee</h2>
+                    <h2 className="text-center mb-4">New Employee</h2>
                     {message && <div className="alert alert-info">{message}</div>}
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">

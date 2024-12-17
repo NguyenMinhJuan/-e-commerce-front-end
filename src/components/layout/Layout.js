@@ -3,6 +3,7 @@ import {Link, Outlet, useNavigate} from 'react-router-dom';
 import { FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa'; // Imported FaUser for login icon
 import './Layout.css';
 import { useAuth } from "../../context/AuthContext";
+import {toast} from "react-toastify";
 
 function Layout({ children }) {
     const { isLogin } = useAuth();
@@ -20,7 +21,9 @@ function Layout({ children }) {
         }
     };
 
-    const handleCart=()=>{
+    const handleCart=(e)=>{
+        e.preventDefault()
+        toast.info("You need to login first!")
         if(isLogin===true)
         {
             navigate("/cart")
@@ -79,16 +82,16 @@ function Layout({ children }) {
             <footer className="footer">
                 <div className="footer-container">
                     <div className="footer-section">
-                        <h3>Về chúng tôi</h3>
-                        <p>UniTrade - Nền tảng mua sắm trực tuyến hàng đầu</p>
+                        <h3>About us</h3>
+                        <p>Amazon - Nền tảng mua sắm trực tuyến hàng đầu</p>
                     </div>
                     <div className="footer-section">
-                        <h3>Liên hệ</h3>
+                        <h3>Contact</h3>
                         <p>Email: contact@unitrade.com</p>
-                        <p>Điện thoại: (84) 123-456-789</p>
+                        <p>Phone: (84) 123-456-789</p>
                     </div>
                     <div className="footer-section">
-                        <h3>Theo dõi</h3>
+                        <h3>Follow us</h3>
                         <div className="social-links">
                             <a href="#" className="social-link">Facebook</a>
                             <a href="#" className="social-link">Instagram</a>

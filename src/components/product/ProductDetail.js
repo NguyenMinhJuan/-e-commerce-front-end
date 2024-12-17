@@ -1,32 +1,31 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import './ProductDetail.css';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import altImg from "../../images/altImg.png";
-import { useParams, useNavigate } from 'react-router-dom';
-import { toast } from "react-toastify";
-import { useAuth } from "../../context/AuthContext";
-import Slider from "react-slick";
+import { useParams } from 'react-router-dom';
+import { Carousel } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {useAuth} from "../../context/AuthContext";
 
-// Custom hook for fetching product data
-const useProductData = (id) => {
+function ProductDetail() {
     const [product, setProduct] = useState(null);
-    const [productImage, setProductImage] = useState(null);
+    const [productImages, setProductImages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { id } = useParams();
+    const isLogin=useAuth();
 
     useEffect(() => {
         const fetchProductData = async () => {
             try {
-                const [productResponse, imageResponse] = await Promise.all([
-                    axios.get(`http://localhost:8001/api/products/${id}`),
-                    axios.get(`http://localhost:8001/api/images/${id}`)
-                ]);
-
+                // Fetch product details
+                const productResponse = await axios.get(`http://localhost:8001/api/products/${id}`);
                 setProduct(productResponse.data);
-                setProductImage(imageResponse.data);
+
+                // Fetch product images
+                const imagesResponse = await axios.get(`http://localhost:8001/api/images/${id}`);
+                setProductImages(imagesResponse.data);
+
                 setLoading(false);
             } catch (err) {
-                console.error("Error fetching product data:", err);
                 setError(err);
                 setLoading(false);
             }
@@ -35,96 +34,89 @@ const useProductData = (id) => {
         fetchProductData();
     }, [id]);
 
-    return { product, productImage, loading, error };
-};
+    if (loading) return (
+        <div className="container text-center mt-5">
+            <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    );
 
-function ProductDetail() {
-    const navigate = useNavigate();
-    const { isLogin } = useAuth();
-    const { id } = useParams();
+    if (error) return (
+        <div className="container mt-5">
+            <div className="alert alert-danger">Error loading product</div>
+        </div>
+    );
 
-    const { product, productImage, loading, error } = useProductData(id);
-
-    // Memoized carousel settings to prevent re-creation on every render
-    const carouselSettings = useMemo(() => ({
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        fade: true,
-    }), []);
-
-    // Memoized add to cart handler
-    const handleAddToCart = useCallback(() => {
-        if (!isLogin) {
-            navigate('/signin');
-            toast.info("You need to be logged in!");
-        } else {
-            toast.success("Add new cart successfully!");
-        }
-    }, [isLogin, navigate]);
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error loading product details</div>;
-    }
-
-    if (!product) {
-        return <div>No product found</div>;
-    }
+    if (!product) return (
+        <div className="container mt-5">
+            <div className="alert alert-warning">No product found</div>
+        </div>
+    );
 
     return (
-        <section className="section-product-detail">
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-6 product-detail-left">
-                        <Slider {...carouselSettings}>
-                            {productImage && productImage.length > 0 ? (
-                                productImage.map((image, index) => (
-                                    <div key={index} className="carousel-item">
-                                        <img
-                                            src={image.imgUrl || altImg}
-                                            className="img-fluid"
-                                            alt={`Product image ${index + 1}`}
-                                        />
-                                    </div>
-                                ))
-                            ) : (
-                                <div>
+        <div className="container mt-5">
+            <div className="row">
+                <div className="col-md-6">
+                    <Carousel>
+                        {productImages.length > 0 ? (
+                            productImages.map((image, index) => (
+                                <Carousel.Item key={index}>
                                     <img
-                                        src={product.imageUrl || altImg}
-                                        className="img-fluid"
-                                        alt={product.name || "Product image"}
+                                        className="d-block w-100"
+                                        src={image.imgUrl}
+                                        alt={`Slide ${index + 1}`}
+                                        style={{
+                                            maxHeight: '400px',
+                                            objectFit: 'cover'
+                                        }}
                                     />
+                                </Carousel.Item>
+                            ))
+                        ) : (
+                            <Carousel.Item>
+                                <img
+                                    className="d-block w-100"
+                                    src={product.imageUrl}
+                                    alt={product.name}
+                                    style={{
+                                        maxHeight: '400px',
+                                        objectFit: 'cover'
+                                    }}
+                                />
+                            </Carousel.Item>
+                        )}
+                    </Carousel>
+                </div>
+                <div className="col-md-6">
+                    <h1 className="mb-4">{product.name}</h1>
+                    <p className="text-muted mb-3">{product.description}</p>
+
+                    <div className="mb-3">
+                        <h3 className="text-primary">${product.price}</h3>
+                    </div>
+
+                    <div className="card mb-3">
+                        <div className="card-body">
+                            <div className="row">
+                                <div className="col-6">
+                                    <strong>Category:</strong>
+                                    <p>{product.category.name}</p>
                                 </div>
-                            )}
-                        </Slider>
-                    </div>
-                    <div className="col-md-6 product-detail-right">
-                        <h1 className="product-title">{product.name}</h1>
-                        <p className="product-description">{product.description}</p>
-                        <div className="product-price">
-                            <span className="h4">${product.price}</span>
+                                <div className="col-6">
+                                    <strong>Stock:</strong>
+                                    <p>{product.quantity}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div className="product-details">
-                            <p><strong>Category:</strong> {product.category.name}</p>
-                            <p><strong>Stock:</strong> {product.quantity}</p>
-                            <p><strong>Brand:</strong> {product.brand}</p>
-                            <p><strong>Details:</strong> {product.details}</p>
-                        </div>
-                        <button className="btn btn-primary" onClick={handleAddToCart}>
-                            Add to Cart
-                        </button>
                     </div>
+
+                    <button className="btn btn-primary btn-lg w-100">
+                        Add to Cart
+                    </button>
                 </div>
             </div>
-        </section>
+        </div>
     );
 }
 

@@ -51,6 +51,7 @@ export function EmployeesList() {
                     <th>Email</th>
                     <th>Role</th>
                     <th>Profile pic</th>
+                    <th></th>
                     <th colSpan={2}>Action</th>
                 </tr>
                 </thead>

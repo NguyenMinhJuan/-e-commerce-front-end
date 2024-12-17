@@ -1,91 +1,145 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './ProductList.css';
 import axios from 'axios';
-import altImg from "../../images/altImg.png"; // Placeholder image
+import 'bootstrap/dist/css/bootstrap.min.css';
+import altImg from "../../images/altImg.png";
+import CategoryBanner from "./CategoryBanner";
 
 function ProductList() {
     const [products, setProducts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);  // Track current page
-    const [productsPerPage] = useState(12); // Set 12 products per page
+    const [currentPage, setCurrentPage] = useState(1);
+    const [productsPerPage] = useState(12);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:8001/api/products')
-            .then((response) => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get('http://localhost:8001/api/products');
                 setProducts(response.data);
-            })
-            .catch((error) => {
+                setLoading(false);
+            } catch (error) {
                 console.error("Có lỗi khi tải sản phẩm:", error);
-            });
-    }, []); // Empty dependency array to avoid infinite loop
+                setError(error);
+                setLoading(false);
+            }
+        };
 
-    // Get the products to be displayed based on the current page
+        fetchProducts();
+    }, []);
+
+    // Pagination logic
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+    const totalPages = Math.ceil(products.length / productsPerPage);
 
-    // Handle page change
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
 
-    // Calculate total pages
-    const totalPages = Math.ceil(products.length / productsPerPage);
+    // Truncate description
+    const truncateDescription = (desc, maxLength = 100) => {
+        return desc.length > maxLength ? desc.substring(0, maxLength) + '...' : desc;
+    };
+
+    if (loading) return (
+        <div className="container text-center mt-5">
+            <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    );
+
+    if (error) return (
+        <div className="container mt-5">
+            <div className="alert alert-danger">Error loading products</div>
+        </div>
+    );
 
     return (
-        <>
-            <section className="section-products">
-                <div className="container">
-                    <div className="row">
-                        {/* Loop through and display the current products */}
-                        {currentProducts.map((product, index) => (
-                            <div key={index} className="col-md-6 col-lg-4 col-xl-3">
-                                <div className="card fixed-size-card">
-                                    <Link to={`/products/${product.id}`}>
+        <section className="section-products bg-light py-5">
+            <div className="container">
+                <div>
+                    <CategoryBanner/>
+                </div>
+                <h2 className="text-center mb-4">Our Products</h2>
+                <div className="row g-4">
+                    {currentProducts.map((product) => (
+                        <div key={product.id} className="col-sm-6 col-md-4 col-lg-3">
+                            <div className="card h-100 shadow-sm border-0 hover-elevate">
+                                <Link to={`/products/${product.id}`} className="text-decoration-none">
+                                    <div className="card-img-top-container"
+                                         style={{height: '250px', overflow: 'hidden'}}>
                                         <img
-                                            src={product.imageUrl || altImg} // Fallback to altImg if no imageUrl
-                                            className="card-img-top"
-                                            alt={product.name || "Product image"} // Use product name for alt text
+                                            src={product.imageUrl || altImg}
+                                            className="card-img-top object-fit-cover w-100 h-100"
+                                            alt={product.name}
                                         />
-                                    </Link>
-                                    <div className="card-body">
-                                        <h5 className="card-title">{product.name}</h5>
-                                        <p className="card-text">{product.description}</p> {/* Description with truncation */}
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <span className="h5 mb-0">${product.price}</span>
-                                        </div>
+                                    </div>
+                                </Link>
+                                <div className="card-body d-flex flex-column">
+                                    <h5 className="card-title text-dark mb-2">{product.name}</h5>
+                                    <p className="card-text text-muted mb-3">
+                                        {truncateDescription(product.description)}
+                                    </p>
+                                    <div className="d-flex justify-content-between align-items-center mt-auto">
+                                        <span className="h5 text-primary mb-0">${product.price.toFixed(2)}</span>
+                                        <Link
+                                            to={`/products/${product.id}`}
+                                            className="btn btn-outline-primary btn-sm"
+                                        >
+                                            Buy now
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
+                </div>
 
-                    {/* Pagination Controls */}
-                    <div className="pagination-container d-flex justify-content-center mt-4">
+                {/* Pagination */}
+                <div className="d-flex justify-content-center mt-4">
+                    <nav>
                         <ul className="pagination">
-                            {/* Previous Page */}
                             <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                                <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>&laquo; Previous</button>
+                                <button
+                                    className="page-link"
+                                    onClick={() => handlePageChange(currentPage - 1)}
+                                    disabled={currentPage === 1}
+                                >
+                                    Previous
+                                </button>
                             </li>
 
-                            {/* Page Numbers */}
                             {[...Array(totalPages)].map((_, index) => (
-                                <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
-                                    <button className="page-link" onClick={() => handlePageChange(index + 1)}>
+                                <li
+                                    key={index}
+                                    className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+                                >
+                                    <button
+                                        className="page-link"
+                                        onClick={() => handlePageChange(index + 1)}
+                                    >
                                         {index + 1}
                                     </button>
                                 </li>
                             ))}
 
-                            {/* Next Page */}
                             <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                                <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>Next &raquo;</button>
+                                <button
+                                    className="page-link"
+                                    onClick={() => handlePageChange(currentPage + 1)}
+                                    disabled={currentPage === totalPages}
+                                >
+                                    Next
+                                </button>
                             </li>
                         </ul>
-                    </div>
+                    </nav>
                 </div>
-            </section>
-        </>
+            </div>
+        </section>
     );
 }
 
