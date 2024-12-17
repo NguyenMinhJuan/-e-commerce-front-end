@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {Link, Outlet, useNavigate} from 'react-router-dom';
-import { FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa'; // Imported FaUser for login icon
+import {FaCaretDown, FaSearch, FaShoppingCart, FaUser} from 'react-icons/fa'; // Imported FaUser for login icon
 import './Layout.css';
 import { useAuth } from "../../context/AuthContext";
 import {toast} from "react-toastify";
