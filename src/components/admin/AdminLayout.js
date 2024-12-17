@@ -1,11 +1,13 @@
-// src/components/admin/Admin.js
+// src/components/admin/AdminLayout.js
 import React from 'react';
 import Sidebar from './Sidebar';
 import MainContent from './MainContent';
-import './Admin.css';  // Make sure you have appropriate styling here
+import './AdminLayout.css';  // Ensure you have appropriate styling here
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Outlet } from 'react-router-dom';  // Import Outlet
 
-const Admin = () => {
+
+const AdminLayout = () => {
     return (
         <div className="admin-container">
             <Sidebar />
@@ -14,4 +16,4 @@ const Admin = () => {
     );
 }
 
-export default Admin;
+export default AdminLayout;

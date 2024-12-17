@@ -1,26 +1,23 @@
 /* Sidebar Style */
 .admin-sidebar {
-    width: 250px;              /* Đặt chiều rộng của sidebar */
-    height: 100vh;             /* Chiều cao full viewport */
+    width: 250px;
+    height: 100vh;
     background-color: #343a40;
     color: white;
-    position: fixed;           /* Để sidebar cố định khi cuộn trang */
+    position: fixed;
     top: 0;
     left: 0;
-    padding-top: 30px;         /* Padding cho phần đầu sidebar */
+    padding-top: 30px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000;             /* Đảm bảo sidebar luôn hiển thị trên các phần tử khác */
+    z-index: 1000;
 }
 
-/* Main Content */
 .admin-main-content {
-    margin-left: 250px;        /* Đảm bảo nội dung không bị che khuất bởi sidebar */
+    margin-left: 250px;
     padding: 20px;
-    flex: 1;
-    transition: margin-left 0.3s ease-in-out;  /* Thêm hiệu ứng chuyển động khi sidebar thay đổi */
+    transition: margin-left 0.3s ease-in-out;
 }
 
-/* Phần tiêu đề của sidebar */
 .sidebar-header {
     text-align: center;
     margin-bottom: 20px;
@@ -32,7 +29,6 @@
     color: #f8f9fa;
 }
 
-/* Cập nhật layout cho phần navbar */
 .nav-link {
     color: #f8f9fa;
     padding: 10px 20px;
@@ -53,12 +49,31 @@
     color: white;
 }
 
-/* Thêm hiệu ứng cho các icon trong sidebar */
 .nav-link svg {
-    margin-right: 10px;
+    margin-right: 10px; /* Spacing between the icon and text */
 }
 
-/* Đảm bảo sidebar không bị chồng lên nội dung */
+/* Sub-menu Styles */
+.sub-menu {
+    list-style-type: none;
+    padding-left: 20px; /* Indentation for sub-menu items */
+    display: none; /* Hide sub-menu by default */
+    margin-top: 10px;
+}
+
+.sub-menu.show {
+    display: block; /* Show sub-menu when 'show' class is added */
+}
+
+.sub-menu li {
+    padding: 5px 0;
+}
+
+.sub-menu li .nav-link {
+    font-size: 1rem;
+    padding-left: 30px; /* Increase padding for sub-menu items */
+}
+
 @media (max-width: 768px) {
     .admin-sidebar {
         width: 200px;
@@ -72,7 +87,6 @@
         font-size: 1rem;
     }
 
-    /* Cho phần nội dung chính khi sidebar thu nhỏ */
     .admin-main-content {
         margin-left: 200px;
     }

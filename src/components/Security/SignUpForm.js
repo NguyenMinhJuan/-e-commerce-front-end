@@ -79,8 +79,8 @@ function SignUpForm() {
                                                                             type="text"
                                                                             name="username"
                                                                             className={`form-control ${touched.username && errors.username ? 'is-invalid' : ''}`}
+                                                                            placeholder={"Username"}
                                                                         />
-                                                                        <label className="form-label">Username</label>
                                                                         <ErrorMessage
                                                                             name="username"
                                                                             component="div"
@@ -96,8 +96,9 @@ function SignUpForm() {
                                                                             type="email"
                                                                             name="email"
                                                                             className={`form-control ${touched.email && errors.email ? 'is-invalid' : ''}`}
+                                                                            placeholder={"Email"}
+
                                                                         />
-                                                                        <label className="form-label">Email</label>
                                                                         <ErrorMessage
                                                                             name="email"
                                                                             component="div"
@@ -113,8 +114,9 @@ function SignUpForm() {
                                                                             type="password"
                                                                             name="password"
                                                                             className={`form-control ${touched.password && errors.password ? 'is-invalid' : ''}`}
+                                                                            placeholder={"Password"}
+
                                                                         />
-                                                                        <label className="form-label">Password</label>
                                                                         <ErrorMessage
                                                                             name="password"
                                                                             component="div"
@@ -130,8 +132,8 @@ function SignUpForm() {
                                                                             type="password"
                                                                             name="repeatPassword"
                                                                             className={`form-control ${touched.repeatPassword && errors.repeatPassword ? 'is-invalid' : ''}`}
+                                                                            placeholder={"Repeat your password"}
                                                                         />
-                                                                        <label className="form-label">Repeat your password</label>
                                                                         <ErrorMessage
                                                                             name="repeatPassword"
                                                                             component="div"
