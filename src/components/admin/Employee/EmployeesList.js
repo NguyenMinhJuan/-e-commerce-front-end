@@ -6,39 +6,72 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import CSS để st
 
 export function EmployeesList() {
     const [employees, setEmployees] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
-    useEffect(() => {
-        // Lấy danh sách người dùng từ API
+    const fetchEmployees = () => {
         axios.get("http://localhost:8001/api/admin/employees").then((res) => {
             setEmployees(res.data);
-        })
+        });
+    };
+
+    useEffect(() => {
+        fetchEmployees();
     }, []);
 
-    const handleDelete=(id)=>{
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const filteredEmployees = employees.filter(employee => {
+        const searchTermLower = searchTerm.toLowerCase();
+        return employee.user.username.toLowerCase().includes(searchTermLower) ||
+               (employee.name && employee.name.toLowerCase().includes(searchTermLower));
+    });
+
+    const handleDelete = (id) => {
         confirmAlert({
             title: 'Warning',
             message: 'Are you sure want to delete this person?',
             buttons: [
                 {
                     label: 'Absolutely!',
-                    onClick: () => deleteEmployee (id)
+                    onClick: () => deleteEmployee(id)
                 },
                 {
                     label: 'No!',
                 }
             ]
         });
-    }
+    };
 
-    const deleteEmployee = (id)=>{
-        axios.delete(`http://localhost:8001/api/admin/employees/${id}`).then((res) => {})
-    }
+    const deleteEmployee = (id) => {
+        axios.delete(`http://localhost:8001/api/admin/employees/${id}`)
+            .then(() => {
+                // Cập nhật lại danh sách sau khi xóa
+                fetchEmployees();
+            })
+            .catch(error => {
+                console.error("Error deleting employee:", error);
+            });
+    };
 
     return (
         <>
-<span className="badge badge-danger d-flex justify-content-center align-items-center text-dark fs-4 pb-3">
-  Employee management
-</span>
+            <span className="badge badge-danger d-flex justify-content-center align-items-center text-dark fs-4 pb-3">
+                Employee management
+            </span>
+
+            {/* Thêm ô tìm kiếm */}
+            <div className="mb-3">
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search by username or name..."
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
+            </div>
+
             <table className="table table-striped table-dark">
                 <thead>
                 <tr>
@@ -56,7 +89,7 @@ export function EmployeesList() {
                 </tr>
                 </thead>
                 <tbody>
-                {employees.map((user) => (
+                {filteredEmployees.map((user) => (
                     <tr key={user.id}>
                         <td>{user.id}</td>
                         <td>{user.name || 'N/A'}</td>
