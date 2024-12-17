@@ -30,6 +30,14 @@ export function EmployeesList() {
                (employee.name && employee.name.toLowerCase().includes(searchTermLower));
     });
 
+    const handleAccountStatus = (username) => {
+        axios.put(`http://localhost:8001/api/user/setStatus/${username}`)
+            .then((res) => {
+                toast.success('User Status Updated: ' + res.data.message);
+                fetchEmployees();
+            });
+    };
+
     const handleDelete = (id) => {
         confirmAlert({
             title: 'Warning',
@@ -86,6 +94,7 @@ export function EmployeesList() {
                     <th>Email</th>
                     <th>Role</th>
                     <th>Profile pic</th>
+                    <th>Status</th>
                     <th></th>
                     <th colSpan={2}>Action</th>
                 </tr>
@@ -107,12 +116,21 @@ export function EmployeesList() {
                             <img className="h-25 w-25" src={user.user.imgUrl} alt="avatar"></img>
                         </td>
                         <td>
-                            <button className="btn btn-outline-danger btn-sm" onClick={()=>{
-                                handleDelete(user.user.id);
-                            }}>Delete</button>
+                            {user.user.accountStatus}
                         </td>
                         <td>
-                            <button className="btn btn-outline-success btn-sm">Update</button>
+                            <button className="btn btn-outline-danger btn-sm" onClick={() => {
+                                handleDelete(user.user.id);
+                            }}>Delete
+                            </button>
+                        </td>
+                        <td>
+                            <button
+                                className={`btn btn-outline-${user.user.accountStatus === "INACTIVE" ? 'success' : 'warning'} btn-sm`}
+                                onClick={() => handleAccountStatus(user.user.username)}
+                            >
+                                {user.user.accountStatus === "INACTIVE" ? 'Active' : 'Inactive'}
+                            </button>
                         </td>
                     </tr>
                 ))}
