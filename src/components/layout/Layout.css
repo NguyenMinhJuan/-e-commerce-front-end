@@ -176,10 +176,12 @@
 .search-button:hover {
     background: #2980b9;
 }
+
 .cart-icon {
     color: white; /* Makes the icon white */
     font-size: 2rem; /* Increases the size (2 times the default size) */
 }
+
 .bi-person {
     font-size: 1.8rem; /* Make the icon bigger */
     margin-right: 8px;  /* Adds space between the icon and text */
@@ -192,4 +194,84 @@
     color: white; /* Changes the icon color to white */
 }
 
+/* User Dropdown Styles */
+.user-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
 
+.user-dropdown-button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+.user-dropdown-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 8px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: max-content;
+    padding: 8px 0;
+    z-index: 1000;
+}
+
+.user-dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 20px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 1.05rem;
+    transition: all 0.2s ease;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: right;
+    cursor: pointer;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #721c24;
+}
+
+.dropdown-item:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-item[href*="/admin"] {
+    color: #721c24;
+    font-weight: 600;
+}
+
+.dropdown-item[href*="/admin"]:hover {
+    background-color: #f8d7da;
+}
