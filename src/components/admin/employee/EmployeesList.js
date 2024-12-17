@@ -3,42 +3,51 @@ import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { confirmAlert } from 'react-confirm-alert'; // Import confirmAlert
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import CSS để styling
+import { ToastContainer, toast } from 'react-toastify';
+
 
 export function EmployeesList() {
     const [employees, setEmployees] = useState([]);
 
+    const fetchEmployees = () => {
+        axios.get("http://localhost:8001/api/admin/employees")
+            .then((res) => setEmployees(res.data));
+    };
+
     useEffect(() => {
-        // Lấy danh sách người dùng từ API
-        axios.get("http://localhost:8001/api/admin/employees").then((res) => {
-            setEmployees(res.data);
-        })
+        fetchEmployees();
     }, []);
 
-    const handleDelete=(id)=>{
+    const handleDelete = (id) => {
         confirmAlert({
             title: 'Warning',
             message: 'Are you sure want to delete this person?',
             buttons: [
                 {
                     label: 'Absolutely!',
-                    onClick: () => deleteEmployee (id)
+                    onClick: () => {
+                        axios.delete(`http://localhost:8001/api/admin/employees/${id}`)
+                            .then(() => fetchEmployees());
+                    }
                 },
-                {
-                    label: 'No!',
-                }
+                { label: 'No!' }
             ]
         });
-    }
+    };
 
-    const deleteEmployee = (id)=>{
-        axios.delete(`http://localhost:8001/api/admin/employees/${id}`).then((res) => {})
-    }
+    const handleAccountStatus = (username) => {
+        axios.put(`http://localhost:8001/api/user/setStatus/${username}`)
+            .then((res) => {
+                toast.success('User Status Updated: ' + res.data.message);
+                fetchEmployees();
+            });
+    };
 
     return (
         <>
-<span className="badge badge-danger d-flex justify-content-center align-items-center text-dark fs-4 pb-3">
-  Employee management
-</span>
+            <span className="badge badge-danger d-flex justify-content-center align-items-center text-dark fs-4 pb-3">
+                Employee management
+            </span>
             <table className="table table-striped table-dark">
                 <thead>
                 <tr>
@@ -65,22 +74,26 @@ export function EmployeesList() {
                         <td>{user.salary ? user.salary.toLocaleString() : 'N/A'}</td>
                         <td>{user.user.username}</td>
                         <td>{user.user.email}</td>
+                        <td>{user.user.roles.map(role => role.roleName).join(', ')}</td>
                         <td>
-                            {user.user.roles.map(role => role.roleName).join(', ')}
+                            <img className="h-25 w-25" src={user.user.imgUrl} alt="avatar" />
+                        </td>
+                        <td>{user.user.accountStatus}</td>
+                        <td>
+                            <button
+                                className="btn btn-outline-danger btn-sm"
+                                onClick={() => handleDelete(user.user.id)}
+                            >
+                                Delete
+                            </button>
                         </td>
                         <td>
-                            <img className="h-25 w-25" src={user.user.imgUrl} alt="avatar"></img>
-                        </td>
-                        <td>
-                            {user.user.accountStatus}
-                        </td>
-                        <td>
-                            <button className="btn btn-outline-danger btn-sm" onClick={()=>{
-                                handleDelete(user.user.id);
-                            }}>Delete</button>
-                        </td>
-                        <td>
-                            <button className="btn btn-outline-success btn-sm">Active/Inactive</button>
+                            <button
+                                className={`btn btn-outline-${user.user.accountStatus === "INACTIVE" ? 'success' : 'warning'} btn-sm`}
+                                onClick={() => handleAccountStatus(user.user.username)}
+                            >
+                                {user.user.accountStatus === "INACTIVE" ? 'Active' : 'Inactive'}
+                            </button>
                         </td>
                     </tr>
                 ))}

@@ -27,9 +27,8 @@ function SignInForm() {
     try {
       const response = await axios.post("http://localhost:8001/api/login", formData);
       const { username, token, authorities } = response.data;
-      const role = authorities && authorities.length > 0 ? authorities[0].authority : "defaultRole";
+      const role = authorities && authorities.length > 0 ? authorities[0].authority : "ROLE_CUSTOMER";
 
-      // Lưu thông tin user vào context và localStorage
       const userData = {
         username,
         role,
@@ -48,7 +47,13 @@ function SignInForm() {
       }
     } catch (error) {
       console.error("Error during login:", error);
-      toast.error("An error occurred during sign in.");
+
+      // Xử lý trường hợp tài khoản bị inactive (status 400)
+      if (error.response && error.response.status === 400) {
+        toast.warn("YOUR ACCOUNT HAS BEEN LOCKED PLEASE CONTACT TUAN FOR MORE INFO!")
+      } else {
+        toast.error("An error occurred during sign in.");
+      }
     }
   };
 
