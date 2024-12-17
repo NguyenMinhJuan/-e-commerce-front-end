@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './ProductList.css';
 import axios from 'axios';
-import altImg from "../../images/altImg.png";
-import CategoryBanner from "./CategoryBanner"; // Placeholder image
+import altImg from "../../images/altImg.png"; // Placeholder image
+import CategoryBanner from './CategoryBanner';
+
 
 function ProductList() {
     const [products, setProducts] = useState([]);
@@ -61,6 +62,7 @@ function ProductList() {
                     </div>
                     <div className="row">
                         <h3 className="text-center pb-3">Our products</h3>
+                        {/* Loop through and display the current products */}
                         {currentProducts.map((product, index) => (
                             <div key={index} className="col-md-6 col-lg-4 col-xl-3">
                                 <div className="card product-card">
