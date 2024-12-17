@@ -9,10 +9,11 @@ import SignUpForm from './components/Security/SignUpForm';
 import AdminLayout from './components/admin/AdminLayout';  // Layout chung cho admin
 import { AuthProvider } from './context/AuthContext';
 import Logout from './components/Security/Logout';
-import Cart from './components/Cart';
+import Cart from './components/cart/Cart';
 import {EmployeesList} from "./components/admin/Employee/EmployeesList";
 import {EmployeesCreate} from "./components/admin/Employee/EmployeeCreate";
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function App() {
     return (
@@ -31,7 +32,6 @@ function App() {
                         <Route path="/cart" element={<Cart />} />
                     </Route>
 
-                    {/* AdminLayout sẽ bao gồm Employee Management */}
                     <Route path="/admin/*" element={<AdminLayout />}>
                         <Route path="employees" element={<EmployeesList />} />  {/* Danh sách nhân viên */}
                         <Route path="employees/add" element={<EmployeesCreate />}></Route>

@@ -29,6 +29,11 @@ const Sidebar = () => {
                 </li>
                 <li><Link to="#" className="nav-link"><FaRegBuilding />
                     Merchant</Link></li>
+                <li>
+                    <a href="http://localhost:3000/" className="nav-link">
+                        <FaBox /> Product Page
+                    </a>
+                </li>
                 <li><Link to="/logout" className="nav-link"><FaSignOutAlt /> Logout</Link></li>
             </ul>
         </div>

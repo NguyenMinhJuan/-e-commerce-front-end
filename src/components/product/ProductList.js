@@ -6,13 +6,32 @@ import altImg from "../../images/altImg.png"; // Placeholder image
 
 function ProductList() {
     const [products, setProducts] = useState([]);
+    const [productImages, setProductImages] = useState({});
     const [currentPage, setCurrentPage] = useState(1);  // Track current page
     const [productsPerPage] = useState(12); // Set 12 products per page
 
     useEffect(() => {
+        // Fetch products
         axios.get('http://localhost:8001/api/products')
             .then((response) => {
                 setProducts(response.data);
+                // Fetch images for each product
+                response.data.forEach(product => {
+                    axios.get(`http://localhost:8001/api/images/${product.id}`)
+                        .then(imgResponse => {
+                            setProductImages(prev => ({
+                                ...prev,
+                                [product.id]: imgResponse.data[0]?.imgUrl || altImg
+                            }));
+                        })
+                        .catch(error => {
+                            console.error(`Error fetching images for product ${product.id}:`, error);
+                            setProductImages(prev => ({
+                                ...prev,
+                                [product.id]: altImg
+                            }));
+                        });
+                });
             })
             .catch((error) => {
                 console.error("Có lỗi khi tải sản phẩm:", error);
@@ -40,19 +59,28 @@ function ProductList() {
                         {/* Loop through and display the current products */}
                         {currentProducts.map((product, index) => (
                             <div key={index} className="col-md-6 col-lg-4 col-xl-3">
-                                <div className="card fixed-size-card">
-                                    <Link to={`/products/${product.id}`}>
-                                        <img
-                                            src={product.imageUrl || altImg} // Fallback to altImg if no imageUrl
-                                            className="card-img-top"
-                                            alt={product.name || "Product image"} // Use product name for alt text
-                                        />
-                                    </Link>
+                                <div className="card product-card">
+                                    <div className="img-container">
+                                        <Link to={`/products/${product.id}`}>
+                                            <img
+                                                src={productImages[product.id] || altImg}
+                                                className="card-img-top product-img"
+                                                alt={product.name || "Product image"}
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+                                                    e.target.src = altImg;
+                                                }}
+                                            />
+                                        </Link>
+                                    </div>
                                     <div className="card-body">
-                                        <h5 className="card-title">{product.name}</h5>
-                                        <p className="card-text">{product.description}</p> {/* Description with truncation */}
+                                        <h5 className="card-title text-truncate">{product.name}</h5>
+                                        <p className="card-text description-truncate">{product.description}</p>
                                         <div className="d-flex justify-content-between align-items-center">
-                                            <span className="h5 mb-0">${product.price}</span>
+                                            <span className="price">${product.price}</span>
+                                            <Link to={`/products/${product.id}`} className="btn btn-outline-primary btn-sm">
+                                                View Details
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
