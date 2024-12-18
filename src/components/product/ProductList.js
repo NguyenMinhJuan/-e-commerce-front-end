@@ -61,7 +61,7 @@ function ProductList() {
                         <CategoryBanner></CategoryBanner>
                     </div>
                     <div className="row">
-                        <h3 className="text-center pb-3">Our products</h3>
+                        <h3 className="text-center pb-3 pt-3">Best seller!</h3>
                         {currentProducts.map((product, index) => (
                             <div key={index} className="col-md-6 col-lg-4 col-xl-3">
                                 <div className="card product-card">
