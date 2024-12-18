@@ -24,7 +24,6 @@ export function EmployeesCreate() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Send POST request to create a new employee
         axios.post("http://localhost:8001/api/admin/employees", newEmployee)
             .then(response => {
                 setMessage('employee created successfully!');

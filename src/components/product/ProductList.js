@@ -62,7 +62,6 @@ function ProductList() {
                     </div>
                     <div className="row">
                         <h3 className="text-center pb-3">Our products</h3>
-                        {/* Loop through and display the current products */}
                         {currentProducts.map((product, index) => (
                             <div key={index} className="col-md-6 col-lg-4 col-xl-3">
                                 <div className="card product-card">

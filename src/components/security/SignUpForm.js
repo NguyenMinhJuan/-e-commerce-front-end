@@ -149,7 +149,7 @@ function SignUpForm() {
                                                                         required
                                                                     />
                                                                     <label className="form-check-label">
-                                                                        I agree all statements in <a href="#!">Terms of service</a>
+                                                                        I agree all statements in <a href="/terms">Terms of service</a>
                                                                     </label>
                                                                 </div>
 
