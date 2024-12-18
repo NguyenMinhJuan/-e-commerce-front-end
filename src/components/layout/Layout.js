@@ -100,6 +100,17 @@ function Layout({ children }) {
                                                     </a>
                                                 </>
                                             )}
+                                            {user?.role === 'ROLE_EMPLOYEE' && (
+                                                <>
+                                                    <a
+                                                        href="http://localhost:3000/admin"
+                                                        className="dropdown-item"
+                                                        onClick={() => setShowDropdown(false)}
+                                                    >
+                                                        Employee Dashboard
+                                                    </a>
+                                                </>
+                                            )}
                                             <button
                                                 className="dropdown-item"
                                                 onClick={handleLogout}

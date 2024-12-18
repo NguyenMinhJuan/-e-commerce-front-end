@@ -33,7 +33,7 @@ export function EmployeesList() {
     const handleAccountStatus = (username) => {
         axios.put(`http://localhost:8001/api/user/setStatus/${username}`)
             .then((res) => {
-                toast.success('User Status Updated: ' + res.data.message);
+                toast.success( res.data);
                 fetchEmployees();
             });
     };
