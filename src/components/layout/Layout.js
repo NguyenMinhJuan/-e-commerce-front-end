@@ -77,7 +77,7 @@ function Layout({ children }) {
                         <nav className="nav-links">
                             <Link to="/become-merchant" className="nav-link">
                                 <FaStore size={24} color="white" />
-                                <span>Become Merchant</span>
+                                <span>Merchant</span>
                             </Link>
                             {isLogin === false ? (
                                 <Link to="/signin" className="nav-link">
