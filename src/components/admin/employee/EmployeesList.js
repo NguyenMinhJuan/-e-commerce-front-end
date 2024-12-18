@@ -100,9 +100,9 @@ export function EmployeesList() {
                 </tr>
                 </thead>
                 <tbody>
-                {filteredEmployees.map((user) => (
-                    <tr key={user.id}>
-                        <td>{user.id}</td>
+                {filteredEmployees.map((user,index) => (
+                    <tr key={index}>
+                        <td>{index+1}</td>
                         <td>{user.name || 'N/A'}</td>
                         <td>{user.phone || 'N/A'}</td>
                         <td>{user.address || 'N/A'}</td>

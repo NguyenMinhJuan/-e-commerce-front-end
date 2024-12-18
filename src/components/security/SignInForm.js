@@ -97,10 +97,8 @@ function SignInForm() {
                                       name="username"
                                       value={formData.username}
                                       className="form-control"
+                                      placeholder="username"
                                   />
-                                  <label className="form-label" htmlFor="form3Example1c">
-                                    Username
-                                  </label>
                                 </div>
                               </div>
                               <div className="d-flex flex-row align-items-center mb-4">
@@ -113,10 +111,8 @@ function SignInForm() {
                                       name="password"
                                       value={formData.password}
                                       className="form-control"
+                                      placeholder="password"
                                   />
-                                  <label className="form-label" htmlFor="form3Example4c">
-                                    Password
-                                  </label>
                                 </div>
                               </div>
 

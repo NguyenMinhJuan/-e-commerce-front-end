@@ -25,10 +25,12 @@ function Layout({ children }) {
 
     const handleCart=(e)=>{
         e.preventDefault()
-        if(isLogin==true)
+        if(isLogin===false)
         {
             toast.info("You need to login first!")
             navigate("/signin")
+        }else {
+            navigate('/cart')
         }
     };
 
