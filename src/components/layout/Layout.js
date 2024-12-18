@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import {Link, Outlet, useNavigate} from 'react-router-dom';
-import {FaCaretDown, FaSearch, FaShoppingCart, FaUser} from 'react-icons/fa'; // Imported FaUser for login icon
+import {FaCaretDown, FaSearch, FaShoppingCart, FaUser, FaStore} from 'react-icons/fa';
 import './Layout.css';
 import { useAuth } from "../../context/AuthContext";
 import {toast} from "react-toastify";
+import logo from '../../images/logo.png';
+
 
 function Layout({ children }) {
     const { isLogin, user } = useAuth();
     const [searchTerm, setSearchTerm] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
     const navigate = useNavigate();
-
     const handleSearch = (e) => {
         e.preventDefault();
         console.log('Search submitted:', searchTerm);
@@ -24,10 +25,12 @@ function Layout({ children }) {
 
     const handleCart=(e)=>{
         e.preventDefault()
-        toast.info("You need to login first!")
-        if(isLogin===true)
+        if(isLogin===false)
         {
-            navigate("/cart")
+            toast.info("You need to login first!")
+            navigate("/signin")
+        }else {
+            navigate('/cart')
         }
     };
 
@@ -58,7 +61,7 @@ function Layout({ children }) {
             <header className="header">
                 <div className="header-container">
                     <Link to="/" className="logo">
-                        <h1>Amazon</h1>
+                        <img src={logo}></img>
                     </Link>
                     <div className="header-right">
                         <form onSubmit={handleSearch} className="search-form">
@@ -74,7 +77,10 @@ function Layout({ children }) {
                             </button>
                         </form>
                         <nav className="nav-links">
-                            {/* Conditional rendering for login/logout icons */}
+                            <Link to="/become-merchant" className="nav-link">
+                                <FaStore size={24} color="white" />
+                                <span>Merchant</span>
+                            </Link>
                             {isLogin === false ? (
                                 <Link to="/signin" className="nav-link">
                                     <FaUser size={24} color="white" />
@@ -92,11 +98,22 @@ function Layout({ children }) {
                                             {user?.role === 'ROLE_ADMIN' && (
                                                 <>
                                                     <a
-                                                        href="http://localhost:3000/admin"
+                                                        href="/admin"
                                                         className="dropdown-item"
                                                         onClick={() => setShowDropdown(false)}
                                                     >
                                                         Admin Dashboard
+                                                    </a>
+                                                </>
+                                            )}
+                                            {user?.role === 'ROLE_EMPLOYEE' && (
+                                                <>
+                                                    <a
+                                                        href="employees/editor"
+                                                        className="dropdown-item"
+                                                        onClick={() => setShowDropdown(false)}
+                                                    >
+                                                        Employee Dashboard
                                                     </a>
                                                 </>
                                             )}
@@ -110,7 +127,6 @@ function Layout({ children }) {
                                     )}
                                 </div>
                             )}
-                            {/* Cart Icon */}
                             <Link to="/cart" className="cart-icon nav-link" onClick={handleCart}>
                                 <FaShoppingCart size={24} />
                                 <span>Cart</span>

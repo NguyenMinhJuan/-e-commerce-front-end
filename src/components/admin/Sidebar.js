@@ -41,7 +41,7 @@ const Sidebar = () => {
                 <li><Link to="#" className="nav-link"><FaRegBuilding />
                     Merchant</Link></li>
                 <li>
-                    <a href="http://localhost:3000/" className="nav-link">
+                    <a href="" className="nav-link">
                         <FaBox /> Product Page
                     </a>
                 </li>

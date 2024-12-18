@@ -14,6 +14,7 @@ import {EmployeesList} from "./components/admin/employee/EmployeesList";
 import {EmployeesCreate} from "./components/admin/employee/EmployeeCreate";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import TermOfServices from "./components/security/TermsOfServices";
 
 function App() {
     return (
@@ -31,12 +32,13 @@ function App() {
                         <Route path="/" element={<ProductList />} />
                         <Route path="/cart" element={<Cart />} />
                     </Route>
-
                     <Route path="/admin/*" element={<AdminLayout />}>
                         <Route path="employees" element={<EmployeesList />} />  {/* Danh sách nhân viên */}
                         <Route path="employees/add" element={<EmployeesCreate />}></Route>
                     </Route>
-
+                    <Route>
+                        <Route path="/terms" element={<TermOfServices/>}></Route>
+                    </Route>
                     <Route path="*" element={<div>404 - Page not found</div>} />
                 </Routes>
             </Router>

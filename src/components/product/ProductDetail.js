@@ -57,9 +57,9 @@ function ProductDetail() {
     const handleAddToCart = useCallback(() => {
         if (!isLogin) {
             navigate('/signin');
-            toast.info("Bạn cần đăng nhập để thêm vào giỏ hàng!");
+            toast.info("You need to login first!");
         } else {
-            toast.success("Đã thêm sản phẩm vào giỏ hàng!");
+            toast.success("Add to cart successfully!");
         }
     }, [isLogin, navigate]);
 
@@ -74,7 +74,7 @@ function ProductDetail() {
     }
 
     if (!product) {
-        return <div className="error-message">Không tìm thấy sản phẩm</div>;
+        return <div className="error-message">Something went wrong :(</div>;
     }
 
     return (
