@@ -3,11 +3,12 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: #e5e5e5;
 }
 
 /* Header Styles */
 .header {
-    background-color: #721c24;
+    background-color: #F08080;
     padding: 1rem 0;
     position: fixed;
     width: 100%;
@@ -25,15 +26,10 @@
     align-items: center;
 }
 
-.logo {
-    text-decoration: none;
-}
-
-.logo h1 {
-    color: #fff;
-    margin: 0;
-    font-size: 1.8rem;
-    font-weight: 700;
+.logo img {
+    width: 165px;
+    height: 40px;
+    margin-right: auto;
 }
 
 .nav-links {

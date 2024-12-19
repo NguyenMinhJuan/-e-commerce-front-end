@@ -58,11 +58,10 @@ function ProductList() {
             <section className="section-products">
                 <div className="container">
                     <div>
-                        <CategoryBanner></CategoryBanner> 
+                        <CategoryBanner></CategoryBanner>
                     </div>
                     <div className="row">
-                        <h3 className="text-center pb-3">Our products</h3> 
-                        {/* Loop through and display the current products */}
+                        <h3 className="text-center pb-3 pt-3">Best seller!</h3>
                         {currentProducts.map((product, index) => (
                             <div key={index} className="col-md-6 col-lg-4 col-xl-3">
                                 <div className="card product-card">
@@ -84,7 +83,7 @@ function ProductList() {
                                         <p className="card-text description-truncate">{product.description}</p>
                                         <div className="d-flex justify-content-between align-items-center">
                                             <span className="price">${product.price}</span>
-                                            <Link to={`/products/${product.id}`} className="btn btn-outline-primary btn-sm">
+                                            <Link to={`/products/${product.id}`} className="btn btn-outline btn-sm btn-view-details">
                                                 View Details
                                             </Link>
                                         </div>

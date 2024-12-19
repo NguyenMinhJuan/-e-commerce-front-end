@@ -12,11 +12,11 @@ function Logout() {
         localStorage.removeItem("username");
         localStorage.removeItem("token");
         localStorage.removeItem("role");
+        localStorage.removeItem("user")
         navigate("/signin");
         toast.success("Logged out successfully!");
         setIsLogin(false);
     }, [setIsLogin])
-
 }
 
 export default Logout;

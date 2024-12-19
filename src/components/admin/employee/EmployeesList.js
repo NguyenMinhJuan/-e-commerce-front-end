@@ -3,6 +3,8 @@ import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { confirmAlert } from 'react-confirm-alert'; // Import confirmAlert
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import CSS để styling
+import { ToastContainer, toast } from 'react-toastify';
+
 
 export function EmployeesList() {
     const [employees, setEmployees] = useState([]);
@@ -27,6 +29,14 @@ export function EmployeesList() {
         return employee.user.username.toLowerCase().includes(searchTermLower) ||
                (employee.name && employee.name.toLowerCase().includes(searchTermLower));
     });
+
+    const handleAccountStatus = (username) => {
+        axios.put(`http://localhost:8001/api/user/setStatus/${username}`)
+            .then((res) => {
+                toast.success( res.data);
+                fetchEmployees();
+            });
+    };
 
     const handleDelete = (id) => {
         confirmAlert({
@@ -84,14 +94,14 @@ export function EmployeesList() {
                     <th>Email</th>
                     <th>Role</th>
                     <th>Profile pic</th>
-                    <th></th>
-                    <th colSpan={2}>Action</th>
+                    <th>Status</th>
+                    <th colSpan={2} className="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                {filteredEmployees.map((user) => (
-                    <tr key={user.id}>
-                        <td>{user.id}</td>
+                {filteredEmployees.map((user,index) => (
+                    <tr key={index}>
+                        <td>{index+1}</td>
                         <td>{user.name || 'N/A'}</td>
                         <td>{user.phone || 'N/A'}</td>
                         <td>{user.address || 'N/A'}</td>
@@ -105,12 +115,21 @@ export function EmployeesList() {
                             <img className="h-25 w-25" src={user.user.imgUrl} alt="avatar"></img>
                         </td>
                         <td>
-                            <button className="btn btn-outline-danger btn-sm" onClick={()=>{
-                                handleDelete(user.user.id);
-                            }}>Delete</button>
+                            {user.user.accountStatus}
                         </td>
                         <td>
-                            <button className="btn btn-outline-success btn-sm">Update</button>
+                            <button className="btn btn-outline-danger btn-sm" onClick={() => {
+                                handleDelete(user.user.id);
+                            }}>Delete
+                            </button>
+                        </td>
+                        <td>
+                            <button
+                                className={`btn btn-outline-${user.user.accountStatus === "INACTIVE" ? 'success' : 'warning'} btn-sm`}
+                                onClick={() => handleAccountStatus(user.user.username)}
+                            >
+                                {user.user.accountStatus === "INACTIVE" ? 'Active' : 'Inactive'}
+                            </button>
                         </td>
                     </tr>
                 ))}
