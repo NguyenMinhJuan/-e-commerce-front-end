@@ -95,6 +95,13 @@ function Layout({ children }) {
                                     </button>
                                     {showDropdown && (
                                         <div className="user-dropdown-menu">
+                                            <Link
+                                                to="/account"
+                                                className="dropdown-item"
+                                                onClick={() => setShowDropdown(false)}
+                                            >
+                                                Account Information
+                                            </Link>
                                             {user?.role === 'ROLE_ADMIN' && (
                                                 <>
                                                     <a
@@ -115,6 +122,17 @@ function Layout({ children }) {
                                                     >
                                                         Employee Dashboard
                                                     </a>
+                                                </>
+                                            )}
+                                            {user?.role === 'ROLE_MERCHANT' && (
+                                                <>
+                                                    <Link
+                                                        to="/merchant/products"
+                                                        className="dropdown-item"
+                                                        onClick={() => setShowDropdown(false)}
+                                                    >
+                                                        Merchant Dashboard
+                                                    </Link>
                                                 </>
                                             )}
                                             <button
