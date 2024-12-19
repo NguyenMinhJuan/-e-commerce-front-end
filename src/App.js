@@ -45,7 +45,7 @@ function App() {
                         </Route>
                     </Route>
 
-                    <Route element={<PrivateRoute allowedRoles={['ROLE_MERCHANT']} />}>
+                    <Route element={<PrivateRoute allowedRoles={['ROLE_MERCHANT','ROLE_ADMIN']} />}>
                         <Route path="/merchant/*" element={<MerchantLayout />}>
                             <Route path="products" element={<ProductManagement />} />
                             <Route path="products/new" element={<AddProduct />} />
