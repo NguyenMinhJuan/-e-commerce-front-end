@@ -16,6 +16,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import TermOfServices from "./components/security/terms/TermsOfServices";
 import PartnerRegistration from "./components/merchant/PartnerRegistrationForm";
+import ProductManagement from "./components/merchant/ProductManagement";
+import MerchantLayout from "./components/merchant/MerchantLayout";
+import AccountInfo from "./components/user/AccountInfo";
 import {AccessDenied} from "./components/security/AccessDenied";
 import PrivateRoute from "./components/security/PrivateRoute";
 
@@ -32,6 +35,7 @@ function App() {
                         <Route path="/products" element={<ProductList />} />
                         <Route path="/" element={<ProductList />} />
                         <Route path="/cart" element={<Cart />} />
+                        <Route path="/account" element={<AccountInfo />} />
                     </Route>
 
                     <Route element={<PrivateRoute allowedRoles={['ROLE_ADMIN']} />}>
@@ -40,6 +44,14 @@ function App() {
                             <Route path="employees/add" element={<EmployeesCreate />} />
                         </Route>
                     </Route>
+
+                    <Route element={<PrivateRoute allowedRoles={['ROLE_MERCHANT']} />}>
+                        <Route path="/merchant/*" element={<MerchantLayout />}>
+                            <Route path="products" element={<ProductManagement />} />
+                            <Route path="products/new" element={<AddProduct />} />
+                        </Route>
+                    </Route>
+
                     <Route>
                         <Route path="/terms" element={<TermOfServices/>}></Route>
                         <Route path="/become-merchant" element={<PartnerRegistration/>}></Route>
