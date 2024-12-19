@@ -83,7 +83,7 @@ function ProductList() {
                                         <p className="card-text description-truncate">{product.description}</p>
                                         <div className="d-flex justify-content-between align-items-center">
                                             <span className="price">${product.price}</span>
-                                            <Link to={`/products/${product.id}`} className="btn btn-outline-primary btn-sm">
+                                            <Link to={`/products/${product.id}`} className="btn btn-outline btn-sm btn-view-details">
                                                 View Details
                                             </Link>
                                         </div>
