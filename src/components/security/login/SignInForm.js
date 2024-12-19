@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import signUpIcon from "../../images/alligator.png";
+import signUpIcon from "../../../images/butterfly.png";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../../context/AuthContext";
+import './SignInForm.css'
 
 function SignInForm() {
   const { login } = useAuth();
@@ -50,7 +51,7 @@ function SignInForm() {
 
       // Xử lý trường hợp tài khoản bị inactive (status 400)
       if (error.response && error.response.status === 400) {
-        toast.warn("YOUR ACCOUNT HAS BEEN LOCKED PLEASE CONTACT TUAN FOR MORE INFO!")
+        toast.warn(error.response.data)
       } else {
         toast.error("An error occurred during sign in.");
       }
@@ -59,14 +60,13 @@ function SignInForm() {
 
   return (
       <>
-        <div className="container-fluid vh-100 d-flex justify-content-center align-items-center">
+        <div className="container-fluid vh-100 d-flex justify-content-center align-items-center form-container">
           <div
               className="login-form text-center p-4"
               style={{
                 borderRadius: "8px",
                 width: "80%",
                 maxWidth: "1000px",
-                backgroundColor: "rgba(255, 255, 255, 0.7)",
               }}
           >
             <section className="vh-100">
@@ -125,7 +125,7 @@ function SignInForm() {
                               <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                 <button
                                     type="submit"
-                                    className="btn btn-primary btn-lg"
+                                    className="btn btn-lg btn-login"
                                 >
                                   Submit
                                 </button>
