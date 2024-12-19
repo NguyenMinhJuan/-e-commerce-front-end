@@ -5,8 +5,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import paintImage from '../../images/paint.png';
+import paintImage from '../../../images/paint.png';
 import {useNavigate} from "react-router-dom";
+import './SignUpForm.css'
 
 // Validation Schema
 const SignupSchema = Yup.object().shape({
@@ -50,9 +51,9 @@ function SignUpForm() {
 
     return (
         <>
-            <div className="container-fluid vh-100 d-flex justify-content-center align-items-center">
+            <div className="container-fluid vh-100 d-flex justify-content-center align-items-center form-container">
                 <div className="login-form text-center p-4"
-                     style={{ borderRadius: '8px', width: '80%', maxWidth: '1000px', backgroundColor: 'rgba(255, 255, 255, 0.7)' }}>
+                     style={{ borderRadius: '8px', width: '80%', maxWidth: '1000px'}}>
                     <section className="vh-100">
                         <div className="container h-100">
                             <div className="row d-flex justify-content-center align-items-center h-100">
@@ -159,7 +160,7 @@ function SignUpForm() {
                                                                 <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                                                     <button
                                                                         type="submit"
-                                                                        className="btn btn-primary btn-lg"
+                                                                        className="btn btn-lg btn-signup"
                                                                         disabled={isSubmitting}
                                                                     >
                                                                         Register

@@ -4,7 +4,6 @@ import Sidebar from './Sidebar';
 import MainContent from './MainContent';
 import './AdminLayout.css';  // Ensure you have appropriate styling here
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Outlet } from 'react-router-dom';  // Import Outlet
 
 
 const AdminLayout = () => {

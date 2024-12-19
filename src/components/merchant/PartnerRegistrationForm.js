@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import './PartnerRegistrationForm.css'
+import axios from "axios";
+import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 const PartnerRegistration = () => {
+    const navigate = useNavigate();
     const [partner, setPartner] = useState({
-        id: null,
         name: '',
         phone: '',
         address: ''
@@ -19,19 +22,21 @@ const PartnerRegistration = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Partner Information:', partner);
-        alert('Registration successful!');
+        axios.post("http://localhost:8001/api/shops/signUp", partner).then(response => {
+            toast.success(response.data);
+            navigate("/signin")
+        })
     };
 
     return (
         <div className="partner-registration-container">
             <div className="partner-registration-form">
                 <h2 className="form-title">Join us</h2>
-                <p className="form-subtitle">Please provide your information</p>
+                <p className="form-subtitle">Become out partner</p>
 
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label htmlFor="name" className="form-label">Partner Name</label>
+                        <label htmlFor="name" className="form-label">Shop Name</label>
                         <input
                             id="name"
                             name="name"

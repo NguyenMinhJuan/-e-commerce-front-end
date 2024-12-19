@@ -95,8 +95,7 @@ export function EmployeesList() {
                     <th>Role</th>
                     <th>Profile pic</th>
                     <th>Status</th>
-                    <th></th>
-                    <th colSpan={2}>Action</th>
+                    <th colSpan={2} className="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
