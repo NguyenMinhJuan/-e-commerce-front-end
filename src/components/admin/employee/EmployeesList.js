@@ -93,15 +93,15 @@ export function EmployeesList() {
                     <th>Username</th>
                     <th>Email</th>
                     <th>Role</th>
-                    <th>Profile pic</th>
+                    <th>Avatar</th>
                     <th>Status</th>
-                    <th colSpan={2} className="text-center">Action</th>
+                    <th colSpan={3} className="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 {filteredEmployees.map((user,index) => (
                     <tr key={index}>
-                        <td>{index+1}</td>
+                        <td>{index + 1}</td>
                         <td>{user.name || 'N/A'}</td>
                         <td>{user.phone || 'N/A'}</td>
                         <td>{user.address || 'N/A'}</td>
@@ -130,6 +130,9 @@ export function EmployeesList() {
                             >
                                 {user.user.accountStatus === "INACTIVE" ? 'Active' : 'Inactive'}
                             </button>
+                        </td>
+                        <td>
+                            <button className="btn btn-outline-info btn-sm">reset</button>
                         </td>
                     </tr>
                 ))}
