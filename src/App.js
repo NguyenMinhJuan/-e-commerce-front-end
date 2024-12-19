@@ -15,6 +15,7 @@ import {EmployeesCreate} from "./components/admin/employee/EmployeeCreate";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import TermOfServices from "./components/security/TermsOfServices";
+import PartnerRegistration from "./components/merchant/PartnerRegistrationForm";
 
 function App() {
     return (
@@ -38,6 +39,7 @@ function App() {
                     </Route>
                     <Route>
                         <Route path="/terms" element={<TermOfServices/>}></Route>
+                        <Route path="/become-merchant" element={<PartnerRegistration/>}></Route>
                     </Route>
                     <Route path="*" element={<div>404 - Page not found</div>} />
                 </Routes>

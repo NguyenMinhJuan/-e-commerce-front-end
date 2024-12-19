@@ -6,6 +6,7 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import paintImage from '../../images/paint.png';
+import {useNavigate} from "react-router-dom";
 
 // Validation Schema
 const SignupSchema = Yup.object().shape({
@@ -26,12 +27,14 @@ const SignupSchema = Yup.object().shape({
 });
 
 function SignUpForm() {
+    const navigate=useNavigate();
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
             // Remove repeatPassword before sending to backend
             const { repeatPassword, ...submitData } = values;
             const response = await axios.post('http://localhost:8001/api/user/signUp', submitData);
             toast.success(response.data);
+            navigate("/signin")
         } catch (error) {
             if (error.response) {
                 toast.error('Invalid information!');
