@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import {Link, Outlet, useNavigate} from 'react-router-dom';
-import {FaCaretDown, FaSearch, FaShoppingCart, FaUser, FaStore} from 'react-icons/fa';
+import {FaCaretDown, FaSearch, FaShoppingCart, FaUser, FaStore, FaFilter, FaBell} from 'react-icons/fa';
 import './Layout.css';
 import { useAuth } from "../../context/AuthContext";
 import {toast} from "react-toastify";
 import logo from '../../images/logo.png';
-
 
 function Layout({ children }) {
     const { isLogin, user } = useAuth();
     const [searchTerm, setSearchTerm] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
     const navigate = useNavigate();
+
     const handleSearch = (e) => {
         e.preventDefault();
         console.log('Search submitted:', searchTerm);
@@ -64,6 +64,10 @@ function Layout({ children }) {
                         <img src={logo}></img>
                     </Link>
                     <div className="header-right">
+                        <Link to="/filter" className="nav-link icon-with-text">
+                            <FaFilter size={24} />
+                            <span>Filter</span>
+                        </Link>
                         <form onSubmit={handleSearch} className="search-form">
                             <input
                                 type="text"
@@ -77,13 +81,17 @@ function Layout({ children }) {
                             </button>
                         </form>
                         <nav className="nav-links">
-                            <Link to="/become-merchant" className="nav-link">
-                                <FaStore size={24} color="white" />
+                            <Link to="/become-merchant" className="nav-link icon-with-text">
+                                <FaStore size={24} />
                                 <span>Merchant</span>
                             </Link>
+                            <Link to="/notifications" className="nav-link icon-with-text">
+                                <FaBell size={24} />
+                                <span>Notifications</span>
+                            </Link>
                             {isLogin === false ? (
-                                <Link to="/signin" className="nav-link">
-                                    <FaUser size={24} color="white" />
+                                <Link to="/signin" className="nav-link icon-with-text">
+                                    <FaUser size={24} />
                                     <span>Login</span>
                                 </Link>
                             ) : (
@@ -145,7 +153,7 @@ function Layout({ children }) {
                                     )}
                                 </div>
                             )}
-                            <Link to="/cart" className="cart-icon nav-link" onClick={handleCart}>
+                            <Link to="/cart" className="cart-icon nav-link icon-with-text" onClick={handleCart}>
                                 <FaShoppingCart size={24} />
                                 <span>Cart</span>
                             </Link>

@@ -36,7 +36,8 @@ function SignInForm() {
       };
       login(userData);
       localStorage.setItem("token", token);
-
+      localStorage.setItem("username", username);
+      localStorage.setItem("roles", JSON.stringify(role));
       toast.success("Welcome " + username);
 
       if (role === 'ROLE_ADMIN') {

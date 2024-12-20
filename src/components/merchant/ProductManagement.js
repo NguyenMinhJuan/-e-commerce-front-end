@@ -41,7 +41,7 @@ const ProductManagement = () => {
 
     const fetchProducts = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/products/merchant/${merchantId}`);
+            const response = await axios.get(`http://localhost:8001/api/products/shop/${merchantId}`);
             setProducts(response.data);
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -97,10 +97,10 @@ const ProductManagement = () => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>ID</TableCell>
+                            <TableCell>#</TableCell>
                             <TableCell>Name</TableCell>
                             <TableCell>Price</TableCell>
-                            <TableCell>Amount</TableCell>
+                            <TableCell>Quantity</TableCell>
                             <TableCell>Status</TableCell>
                             <TableCell>Category</TableCell>
                             <TableCell>Actions</TableCell>

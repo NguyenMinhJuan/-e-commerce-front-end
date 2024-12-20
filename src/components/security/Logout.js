@@ -11,7 +11,7 @@ function Logout() {
     useEffect(() => {
         localStorage.removeItem("username");
         localStorage.removeItem("token");
-        localStorage.removeItem("role");
+        localStorage.removeItem("roles");
         localStorage.removeItem("user")
         navigate("/signin");
         toast.success("Logged out successfully!");
