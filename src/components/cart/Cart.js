@@ -24,7 +24,6 @@ function Cart() {
 
     const updateQuantity = (itemId, newQuantity) => {
         if (newQuantity < 1) {
-            // Remove item if quantity is less than 1
             axios.delete(`http://localhost:8001/api/cart/${itemId}`)
                 .then(() => {
                     fetchCartItems();
@@ -33,7 +32,6 @@ function Cart() {
                     console.error("Error removing item:", error);
                 });
         } else {
-            // Update quantity
             axios.put(`http://localhost:8001/api/cart/${itemId}`, { quantity: newQuantity })
                 .then(() => {
                     fetchCartItems();
@@ -124,7 +122,7 @@ function Cart() {
                                                                     style={{color: '#cecece'}}
                                                                     onClick={() => removeItem(item.id)}
                                                                 >
-                                                                    <i className="fas fa-trash-alt"></i>
+                                                                    <i className="fas fa-trash-alt bg-danger"></i>
                                                                 </a>
                                                             </div>
                                                         </div>

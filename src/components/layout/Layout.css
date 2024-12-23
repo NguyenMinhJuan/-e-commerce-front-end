@@ -52,11 +52,15 @@
     text-decoration: none;
     padding: 0.5rem 1rem;
     border-radius: 4px;
-    transition: all 0.3s ease;
 }
 
 .nav-link.icon-with-text {
     padding: 0.25rem 1rem;
+}
+
+.nav-link.icon-with-text:hover {
+    background: none;
+    transform: none;
 }
 
 .icon-with-text {
@@ -188,7 +192,7 @@
 }
 
 .user-dropdown-button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background: none;
 }
 
 .user-dropdown-menu {
@@ -280,4 +284,113 @@
         flex-direction: column;
         gap: 10px;
     }
+}
+
+/* Add these new styles to your existing Layout.css */
+
+.auth-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.auth-modal {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 120px;
+}
+
+.auth-modal::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 20px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+}
+
+.auth-button {
+    display: block;
+    padding: 8px 16px;
+    color: #333;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.auth-button {
+    background-color: #F08080;
+    color: white;
+    width: 150px;
+}
+
+.auth-button:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
+
+/* Add these new styles to your existing Layout.css */
+
+.auth-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.auth-modal {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 120px;
+}
+
+.auth-modal::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 20px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+}
+
+.auth-button {
+    display: block;
+    padding: 8px 16px;
+    color: #333;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.auth-button:hover {
+    background-color: #F08080;
+    color: white;
+}
+
+.auth-button:not(:last-child) {
+    border-bottom: 1px solid #eee;
 }

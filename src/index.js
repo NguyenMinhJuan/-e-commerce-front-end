@@ -9,6 +9,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <>
         <App/>
-        <ToastContainer position="bottom-right" autoClose={500} theme="colored"/>
+        <ToastContainer position="bottom-right" autoClose={800} theme="colored"/>
     </>
 );

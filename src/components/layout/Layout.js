@@ -10,27 +10,25 @@ function Layout({ children }) {
     const { isLogin, user } = useAuth();
     const [searchTerm, setSearchTerm] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
+    const [showAuthModal, setShowAuthModal] = useState(false);
     const navigate = useNavigate();
 
     const handleSearch = (e) => {
         e.preventDefault();
-        console.log('Search submitted:', searchTerm);
         if (searchTerm.trim()) {
             const currentSort = new URLSearchParams(window.location.search).get('sort') || 'newest';
             const searchUrl = `/?search=${encodeURIComponent(searchTerm.trim())}&sort=${currentSort}`;
-            console.log('Navigating to:', searchUrl);
             navigate(searchUrl);
         }
     };
 
     const handleCart=(e)=>{
-        e.preventDefault()
-        if(isLogin===false)
-        {
-            toast.info("You need to login first!")
-            navigate("/signin")
-        }else {
-            navigate('/cart')
+        e.preventDefault();
+        if(isLogin===false) {
+            toast.info("You need to login first!");
+            navigate("/signin");
+        } else {
+            navigate('/cart');
         }
     };
 
@@ -44,8 +42,9 @@ function Layout({ children }) {
     };
 
     const handleClickOutside = (e) => {
-        if (!e.target.closest('.user-dropdown-container')) {
+        if (!e.target.closest('.user-dropdown-container') && !e.target.closest('.auth-modal')) {
             setShowDropdown(false);
+            setShowAuthModal(false);
         }
     };
 
@@ -61,7 +60,7 @@ function Layout({ children }) {
             <header className="header">
                 <div className="header-container">
                     <Link to="/" className="logo">
-                        <img src={logo}></img>
+                        <img src={logo} alt="Logo" />
                     </Link>
                     <div className="header-right">
                         <Link to="/filter" className="nav-link icon-with-text">
@@ -90,10 +89,26 @@ function Layout({ children }) {
                                 <span>Notifications</span>
                             </Link>
                             {isLogin === false ? (
-                                <Link to="/signin" className="nav-link icon-with-text">
-                                    <FaUser size={24} />
-                                    <span>Login</span>
-                                </Link>
+                                <div
+                                    className="auth-container"
+                                    onMouseEnter={() => setShowAuthModal(true)}
+                                    onMouseLeave={() => setShowAuthModal(false)}
+                                >
+                                    <div className="nav-link icon-with-text">
+                                        <FaUser size={24} />
+                                        <span>Login</span>
+                                    </div>
+                                    {showAuthModal && (
+                                        <div className="auth-modal">
+                                            <Link to="/signin" className="auth-button">
+                                                Login
+                                            </Link>
+                                            <Link to="/signup" className="auth-button">
+                                                Register
+                                            </Link>
+                                        </div>
+                                    )}
+                                </div>
                             ) : (
                                 <div className="user-dropdown-container">
                                     <button className="user-dropdown-button" onClick={toggleDropdown}>
@@ -111,37 +126,31 @@ function Layout({ children }) {
                                                 Account Information
                                             </Link>
                                             {user?.role === 'ROLE_ADMIN' && (
-                                                <>
-                                                    <a
-                                                        href="/admin"
-                                                        className="dropdown-item"
-                                                        onClick={() => setShowDropdown(false)}
-                                                    >
-                                                        Admin Dashboard
-                                                    </a>
-                                                </>
+                                                <a
+                                                    href="/admin"
+                                                    className="dropdown-item"
+                                                    onClick={() => setShowDropdown(false)}
+                                                >
+                                                    Admin Dashboard
+                                                </a>
                                             )}
                                             {user?.role === 'ROLE_EMPLOYEE' && (
-                                                <>
-                                                    <a
-                                                        href="employees/editor"
-                                                        className="dropdown-item"
-                                                        onClick={() => setShowDropdown(false)}
-                                                    >
-                                                        Employee Dashboard
-                                                    </a>
-                                                </>
+                                                <a
+                                                    href="employees/editor"
+                                                    className="dropdown-item"
+                                                    onClick={() => setShowDropdown(false)}
+                                                >
+                                                    Employee Dashboard
+                                                </a>
                                             )}
                                             {user?.role === 'ROLE_MERCHANT' && (
-                                                <>
-                                                    <Link
-                                                        to="/merchant/products"
-                                                        className="dropdown-item"
-                                                        onClick={() => setShowDropdown(false)}
-                                                    >
-                                                        Merchant Dashboard
-                                                    </Link>
-                                                </>
+                                                <Link
+                                                    to="/merchant/products"
+                                                    className="dropdown-item"
+                                                    onClick={() => setShowDropdown(false)}
+                                                >
+                                                    Merchant Dashboard
+                                                </Link>
                                             )}
                                             <button
                                                 className="dropdown-item"
@@ -167,28 +176,7 @@ function Layout({ children }) {
             </main>
 
             <footer className="footer">
-                <div className="footer-container">
-                    <div className="footer-section">
-                        <h3>About us</h3>
-                        <p>Amazon - Nền tảng mua sắm trực tuyến hàng đầu</p>
-                    </div>
-                    <div className="footer-section">
-                        <h3>Contact</h3>
-                        <p>Email: contact@unitrade.com</p>
-                        <p>Phone: (84) 123-456-789</p>
-                    </div>
-                    <div className="footer-section">
-                        <h3>Follow us</h3>
-                        <div className="social-links">
-                            <a href="#" className="social-link">Facebook</a>
-                            <a href="#" className="social-link">Instagram</a>
-                            <a href="#" className="social-link">Twitter</a>
-                        </div>
-                    </div>
-                </div>
-                <div className="footer-bottom">
-                    <p>&copy; 2024 Amazon. All rights reserved.</p>
-                </div>
+
             </footer>
         </div>
     );

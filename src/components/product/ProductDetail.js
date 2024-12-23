@@ -81,16 +81,53 @@ function ProductDetail() {
         if (!isLogin) {
             navigate('/signin');
             toast.info("You need to login first!");
-        } else {
-            try {
-                axios.post(`http://localhost:8001/api/cart/add/${productId}/${username}`).then(response => {
-                    toast.success(response.data);
-                })
-            } catch (error) {
-                toast.error(error.data.message);
-            }
+            return;
         }
+
+        const checkAndAddToCart = async () => {
+            try {
+                const checkResponse = await axios.get(
+                    `http://localhost:8001/api/cart/isProductExistInCart/${username}/${productId}`
+                );
+
+                // Product exists in cart (Status 200)
+                if (checkResponse.status === 200) {
+                    const updateResponse = await axios.put(
+                        `http://localhost:8001/api/cart/increaseQuantityByOne/${productId}/${username}`
+                    );
+                    toast.success("Product quantity updated in cart!");
+                }
+                // This block will never execute because axios throws error on 400
+                // else if (checkResponse.status === 400) {
+                //     // Previous code
+                // }
+            } catch (error) {
+                // If error status is 400, it means product doesn't exist in cart
+                if (error.response?.status === 400) {
+                    try {
+                        await axios.post(
+                            `http://localhost:8001/api/cart/add/${productId}/${username}`
+                        );
+                        toast.success("Product added to cart!");
+                    } catch (addError) {
+                        toast.error(
+                            "Error adding product to cart: " +
+                            addError.response?.data?.message || addError.message
+                        );
+                    }
+                } else {
+                    toast.error(
+                        "Error checking product in cart: " +
+                        error.response?.data?.message || error.message
+                    );
+                }
+            }
+        };
+
+        checkAndAddToCart();
     }, [isLogin, navigate, username]);
+
+
 
     if (loading) {
         return (
@@ -186,8 +223,8 @@ function ProductDetail() {
                                     </button>
                                 ) : (
                                     <button disabled
-                                        className="btn-add-to-cart"
-                                        onClick={() => handleAddToCart(product.id)}
+                                            className="btn-add-to-cart"
+                                            onClick={() => handleAddToCart(product.id)}
                                     >
                                         {stockMessage}
                                     </button>

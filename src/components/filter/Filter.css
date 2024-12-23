@@ -1,0 +1,72 @@
+.filter-container {
+    position: relative;
+    cursor: pointer;
+    color: white;
+}
+
+.filter-modal {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    min-width: 250px;
+}
+
+.filter-content {
+    padding: 16px;
+    color: #333;
+}
+
+.filter-content h3 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+}
+
+.filter-modal::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 20px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+}
+
+.nav-link.icon-with-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 0.25rem 1rem;
+}
+
+.filter-container .nav-link.icon-with-text {
+    cursor: pointer;
+}
+
+.filter-container:hover .filter-modal {
+    display: block;
+}
+
+.filter-modal {
+    transition: opacity 0.2s ease-in-out;
+    opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+    .filter-modal {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 300px;
+    }
+
+    .filter-modal::before {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
