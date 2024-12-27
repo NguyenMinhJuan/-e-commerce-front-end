@@ -17,10 +17,11 @@ import "slick-carousel/slick/slick-theme.css";
 import TermOfServices from "./components/security/terms/TermsOfServices";
 import PartnerRegistration from "./components/merchant/PartnerRegistrationForm";
 import ProductManagement from "./components/merchant/ProductManagement";
-import MerchantLayout from "./components/merchant/MerchantLayout";
+import ShopLayout from "./components/merchant/ShopLayout";
 import AccountInfo from "./components/user/AccountInfo";
 import {AccessDenied} from "./components/security/AccessDenied";
 import PrivateRoute from "./components/security/PrivateRoute";
+import {ShopsList} from "./components/admin/shop/ShopList";
 
 function App() {
     return (
@@ -42,11 +43,12 @@ function App() {
                         <Route path="/admin/*" element={<AdminLayout />}>
                             <Route path="employees" element={<EmployeesList />} />
                             <Route path="employees/add" element={<EmployeesCreate />} />
+                            <Route path="shops" element={<ShopsList />} />
                         </Route>
                     </Route>
 
                     <Route element={<PrivateRoute allowedRoles={['ROLE_MERCHANT','ROLE_ADMIN']} />}>
-                        <Route path="/merchant/*" element={<MerchantLayout />}>
+                        <Route path="/merchant/*" element={<ShopLayout />}>
                             <Route path="products" element={<ProductManagement />} />
                             <Route path="products/new" element={<AddProduct />} />
                         </Route>

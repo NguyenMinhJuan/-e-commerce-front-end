@@ -12,6 +12,7 @@ function ProductDetail() {
     const {isLogin} = useAuth();
     const {id} = useParams();
     const [product, setProduct] = useState(null);
+    const [shopInfo, setShopInfo] = useState(null);
     const [images, setImages] = useState([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -28,11 +29,21 @@ function ProductDetail() {
                 ]);
 
                 setProduct(productResponse.data);
+
+                // Fetch shop information
+                if (productResponse.data.shopId) {
+                    try {
+                        const shopResponse = await axios.get(`http://localhost:8001/api/shops/1`);
+                        setShopInfo(shopResponse.data);
+                    } catch (shopError) {
+                        console.error("Error fetching shop data:", shopError);
+                    }
+                }
+
                 setImages(imagesResponse.data.length > 0
                     ? imagesResponse.data
                     : [{imgUrl: altImg}]);
 
-                // Tách riêng việc kiểm tra stock để xử lý response
                 try {
                     const stockResponse = await axios.get(`http://localhost:8001/api/products/checkInStock/${id}`);
                     setIsInStock(true);
@@ -81,6 +92,7 @@ function ProductDetail() {
         if (!isLogin) {
             navigate('/signin');
             toast.info("You need to login first!");
+            alert("shop name"+shopInfo.name)
             return;
         }
 
@@ -90,19 +102,13 @@ function ProductDetail() {
                     `http://localhost:8001/api/cart/isProductExistInCart/${username}/${productId}`
                 );
 
-                // Product exists in cart (Status 200)
                 if (checkResponse.status === 200) {
                     const updateResponse = await axios.put(
                         `http://localhost:8001/api/cart/increaseQuantityByOne/${productId}/${username}`
                     );
                     toast.success("Product quantity updated in cart!");
                 }
-                // This block will never execute because axios throws error on 400
-                // else if (checkResponse.status === 400) {
-                //     // Previous code
-                // }
             } catch (error) {
-                // If error status is 400, it means product doesn't exist in cart
                 if (error.response?.status === 400) {
                     try {
                         await axios.post(
@@ -126,8 +132,6 @@ function ProductDetail() {
 
         checkAndAddToCart();
     }, [isLogin, navigate, username]);
-
-
 
     if (loading) {
         return (
@@ -206,6 +210,11 @@ function ProductDetail() {
                     <div className="col-md-5">
                         <div className="product-info">
                             <h1 className="product-title">{product.name}</h1>
+                            {shopInfo && (
+                                <div className="shop-info">
+                                    <h3>Seller: {shopInfo.name}</h3>
+                                </div>
+                            )}
                             <div className="product-price">${product.price}</div>
 
                             <div className="product-description">
@@ -222,14 +231,16 @@ function ProductDetail() {
                                         Add to cart
                                     </button>
                                 ) : (
-                                    <button disabled
-                                            className="btn-add-to-cart"
-                                            onClick={() => handleAddToCart(product.id)}
+                                    <button
+                                        disabled
+                                        className="btn-add-to-cart"
+                                        onClick={() => handleAddToCart(product.id)}
                                     >
                                         {stockMessage}
                                     </button>
                                 )}
                             </div>
+
                         </div>
                     </div>
                 </div>

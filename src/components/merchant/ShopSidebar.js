@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaBox, FaSignOutAlt, FaPlusCircle } from 'react-icons/fa';
-import './MerchantSidebar.css';
+import './ShopSidebar.css';
 
-const MerchantSidebar = () => {
+const ShopSidebar = () => {
     return (
         <div className="merchant-sidebar">
             <div className="sidebar-header">
@@ -35,4 +35,4 @@ const MerchantSidebar = () => {
     );
 }
 
-export default MerchantSidebar;
+export default ShopSidebar;

@@ -5,10 +5,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export function EmployeesCreate() {
     const [newEmployee, setNewEmployee] = useState({
         name: '',
-        age: '',
+        dateOfBirth: '',
         phone: '',
         address: '',
         salary: '',
+        email: '',
     });
 
     const [message, setMessage] = useState('');
@@ -26,13 +27,14 @@ export function EmployeesCreate() {
 
         axios.post("http://localhost:8001/api/admin/employees", newEmployee)
             .then(response => {
-                setMessage('employee created successfully!');
+                setMessage('Employee created successfully!');
                 setNewEmployee({
                     name: '',
-                    age: '',
+                    dateOfBirth: '',
                     phone: '',
                     address: '',
                     salary: '',
+                    email: ''
                 });
             })
             .catch(error => {
@@ -44,10 +46,10 @@ export function EmployeesCreate() {
     return (
         <div className="container my-4">
             <div className="d-flex justify-content-center align-items-center">
-                <div className="col-md-6 col-lg-4 p-4 border rounded shadow-sm">
+                <div className="col-md-8 col-lg-6 p-4 border rounded shadow-sm bg-light">
                     <h2 className="text-center mb-4">New Employee</h2>
                     {message && <div className="alert alert-info">{message}</div>}
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} >
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label">Name</label>
                             <input
@@ -60,17 +62,31 @@ export function EmployeesCreate() {
                                 required
                             />
                         </div>
-                        <div className="mb-3">
-                            <label htmlFor="age" className="form-label">Age</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                id="age"
-                                name="age"
-                                value={newEmployee.age}
-                                onChange={handleInputChange}
-                                required
-                            />
+                        <div className="row mb-3">
+                            <div className="col-md-6">
+                                <label htmlFor="dateOfBirth" className="form-label">Date of Birth</label>
+                                <input
+                                    type="date"
+                                    className="form-control"
+                                    id="dateOfBirth"
+                                    name="dateOfBirth"
+                                    value={newEmployee.dateOfBirth}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <label htmlFor="salary" className="form-label">Salary</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    id="salary"
+                                    name="salary"
+                                    value={newEmployee.salary}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="phone" className="form-label">Phone</label>
@@ -97,13 +113,13 @@ export function EmployeesCreate() {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="salary" className="form-label">Salary</label>
+                            <label htmlFor="email" className="form-label">Email</label>
                             <input
-                                type="number"
+                                type="email"
                                 className="form-control"
-                                id="salary"
-                                name="salary"
-                                value={newEmployee.salary}
+                                id="email"
+                                name="email"
+                                value={newEmployee.email}
                                 onChange={handleInputChange}
                                 required
                             />

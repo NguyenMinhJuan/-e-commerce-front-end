@@ -1,12 +1,12 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import MerchantSidebar from './MerchantSidebar';
-import './MerchantLayout.css';
+import ShopSidebar from './ShopSidebar';
+import './ShopLayout.css';
 
-const MerchantLayout = () => {
+const ShopLayout = () => {
     return (
         <div className="merchant-layout">
-            <MerchantSidebar />
+            <ShopSidebar />
             <div className="merchant-content">
                 <Outlet />
             </div>
@@ -14,4 +14,4 @@ const MerchantLayout = () => {
     );
 };
 
-export default MerchantLayout;
+export default ShopLayout;

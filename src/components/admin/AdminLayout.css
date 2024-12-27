@@ -1,6 +1,6 @@
 /* Sidebar Style */
 .admin-sidebar {
-    width: 250px;
+    width: 200px; /* Reduced width */
     height: 100vh;
     background-color: #F08080;
     color: #f8d7da;
@@ -13,7 +13,7 @@
 }
 
 .admin-main-content {
-    margin-left: 250px;
+    margin-left: 200px; /* Adjusted to match sidebar width */
     padding: 20px;
     transition: margin-left 0.3s ease-in-out;
 }
@@ -24,17 +24,17 @@
 }
 
 .sidebar-header h3 {
-    font-size: 1.5rem;
+    font-size: 1.2rem; /* Reduced font size */
     font-weight: 600;
     color: #f8f9fa;
 }
 
 .nav-link {
     color: #f8f9fa;
-    padding: 10px 20px;
+    padding: 8px 15px; /* Reduced padding */
     display: flex;
     align-items: center;
-    font-size: 1.1rem;
+    font-size: 1rem; /* Slightly smaller font size */
     text-decoration: none;
     transition: background-color 0.3s ease;
 }
@@ -50,19 +50,19 @@
 }
 
 .nav-link svg {
-    margin-right: 10px; /* Spacing between the icon and text */
+    margin-right: 8px; /* Reduced spacing between the icon and text */
 }
 
 /* Sub-menu Styles */
 .sub-menu {
     list-style-type: none;
-    padding-left: 20px; /* Indentation for sub-menu items */
-    display: none; /* Hide sub-menu by default */
+    padding-left: 20px;
+    display: none;
     margin-top: 10px;
 }
 
 .sub-menu.show {
-    display: block; /* Show sub-menu when 'show' class is added */
+    display: block;
 }
 
 .sub-menu li {
@@ -70,24 +70,24 @@
 }
 
 .sub-menu li .nav-link {
-    font-size: 1rem;
-    padding-left: 30px; /* Increase padding for sub-menu items */
+    font-size: 0.9rem; /* Smaller font size for sub-menu items */
+    padding-left: 30px;
 }
 
 @media (max-width: 768px) {
     .admin-sidebar {
-        width: 200px;
+        width: 180px; /* Further reduce sidebar width on small screens */
     }
 
     .sidebar-header h3 {
-        font-size: 1.2rem;
+        font-size: 1.1rem; /* Further reduce font size */
     }
 
     .nav-link {
-        font-size: 1rem;
+        font-size: 0.9rem; /* Smaller font size for mobile */
     }
 
     .admin-main-content {
-        margin-left: 200px;
+        margin-left: 180px; /* Adjusted for smaller sidebar */
     }
 }

@@ -60,11 +60,11 @@ function Layout({ children }) {
             <header className="header">
                 <div className="header-container">
                     <Link to="/" className="logo">
-                        <img src={logo} alt="Logo" />
+                        <img src={logo} alt="Logo"/>
                     </Link>
                     <div className="header-right">
                         <Link to="/filter" className="nav-link icon-with-text">
-                            <FaFilter size={24} />
+                            <FaFilter size={24}/>
                             <span>Filter</span>
                         </Link>
                         <form onSubmit={handleSearch} className="search-form">
@@ -76,16 +76,16 @@ function Layout({ children }) {
                                 className="search-input"
                             />
                             <button type="submit" className="search-button">
-                                <FaSearch />
+                                <FaSearch/>
                             </button>
                         </form>
                         <nav className="nav-links">
                             <Link to="/become-merchant" className="nav-link icon-with-text">
-                                <FaStore size={24} />
+                                <FaStore size={24}/>
                                 <span>Merchant</span>
                             </Link>
                             <Link to="/notifications" className="nav-link icon-with-text">
-                                <FaBell size={24} />
+                                <FaBell size={24}/>
                                 <span>Notifications</span>
                             </Link>
                             {isLogin === false ? (
@@ -95,7 +95,7 @@ function Layout({ children }) {
                                     onMouseLeave={() => setShowAuthModal(false)}
                                 >
                                     <div className="nav-link icon-with-text">
-                                        <FaUser size={24} />
+                                        <FaUser size={24}/>
                                         <span>Login</span>
                                     </div>
                                     {showAuthModal && (
@@ -112,9 +112,9 @@ function Layout({ children }) {
                             ) : (
                                 <div className="user-dropdown-container">
                                     <button className="user-dropdown-button" onClick={toggleDropdown}>
-                                        <FaUser size={24} />
+                                        <FaUser size={24}/>
                                         <span>{user?.username}</span>
-                                        <FaCaretDown />
+                                        <FaCaretDown/>
                                     </button>
                                     {showDropdown && (
                                         <div className="user-dropdown-menu">
@@ -163,7 +163,7 @@ function Layout({ children }) {
                                 </div>
                             )}
                             <Link to="/cart" className="cart-icon nav-link icon-with-text" onClick={handleCart}>
-                                <FaShoppingCart size={24} />
+                                <FaShoppingCart size={24}/>
                                 <span>Cart</span>
                             </Link>
                         </nav>
@@ -172,12 +172,53 @@ function Layout({ children }) {
             </header>
 
             <main className="main-content">
-                <Outlet />
+                <Outlet/>
             </main>
 
-            <footer className="footer">
+            <footer className="footer bg-dark text-light py-5">
+                <div className="container">
+                    <div className="row">
+                        {/* About Us Column */}
+                        <div className="col-md-4">
+                            <h5>About Us</h5>
+                            <p>
+                                We are a leading company in the industry, providing high-quality products and services.
+                            </p>
+                        </div>
 
+                        {/* Contact Information Column */}
+                        <div className="col-md-4">
+                            <h5>Contact Information</h5>
+                            <ul className="list-unstyled">
+                                <li>
+                                    <strong>Email:</strong> contact@company.com
+                                </li>
+                                <li>
+                                    <strong>Phone:</strong> +123 456 789
+                                </li>
+                                <li>
+                                    <strong>Address:</strong> 123 Main Street, City, Country
+                                </li>
+                            </ul>
+                        </div>
+
+                        {/* Social Media Column */}
+                        <div className="col-md-4">
+                            <h5>Follow Us</h5>
+                            <ul className="list-unstyled">
+                                <li><a href="#" className="text-light">Facebook</a></li>
+                                <li><a href="#" className="text-light">Twitter</a></li>
+                                <li><a href="#" className="text-light">Instagram</a></li>
+                                <li><a href="#" className="text-light">LinkedIn</a></li>
+                            </ul>
+                            <p>
+                                Connect with us on social media for the latest updates.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </footer>
+            
         </div>
     );
 }

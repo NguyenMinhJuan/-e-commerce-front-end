@@ -6,8 +6,7 @@ import './AddProduct.css';
 
 function AddProduct() {
     const navigate = useNavigate();
-    
-    // Form states
+
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [quantity, setQuantity] = useState('');
@@ -15,44 +14,41 @@ function AddProduct() {
     const [category, setCategory] = useState('');
     const [files, setFiles] = useState([]);
     const [previews, setPreviews] = useState([]);
-    
-    // Category states
-    const [categories, setCategories] = useState([]);
+
+    const [categories, setCategories] = useState([]);  // State để lưu danh sách categories
     const [showCustomInput, setShowCustomInput] = useState(false);
     const [customCategory, setCustomCategory] = useState('');
-    
-    // UI states
+
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState(null);
 
+    // Gọi API để lấy danh mục khi component được mount
     useEffect(() => {
-        // Fetch existing categories
         fetchCategories();
     }, []);
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/products');
-            // Extract unique categories from products
-            const uniqueCategories = [...new Set(response.data.map(product => product.category))];
-            setCategories(uniqueCategories);
+            const response = await axios.get('http://localhost:8001/api/categories');  // Gọi đúng API lấy danh mục
+            setCategories(response.data);  // Lưu danh sách categories vào state
         } catch (err) {
             console.error('Error fetching categories:', err);
+            setError('Failed to load categories.');
         }
     };
 
+    // Xử lý thay đổi khi người dùng chọn file
     const handleFileChange = (e) => {
         const selectedFiles = Array.from(e.target.files);
-        setFiles(prevFiles => [...prevFiles, ...selectedFiles]);
+        setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
 
-        // Create previews
-        const newPreviews = selectedFiles.map(file => URL.createObjectURL(file));
-        setPreviews(prevPreviews => [...prevPreviews, ...newPreviews]);
+        const newPreviews = selectedFiles.map((file) => URL.createObjectURL(file));
+        setPreviews((prevPreviews) => [...prevPreviews, ...newPreviews]);
     };
 
     const removeFile = (index) => {
-        setFiles(prevFiles => prevFiles.filter((_, i) => i !== index));
-        setPreviews(prevPreviews => prevPreviews.filter((_, i) => i !== index));
+        setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+        setPreviews((prevPreviews) => prevPreviews.filter((_, i) => i !== index));
     };
 
     const handleCategoryChange = (e) => {
@@ -88,37 +84,36 @@ function AddProduct() {
             formData.append('description', description.trim());
             formData.append('category', category.trim());
 
-            files.forEach(file => {
+            files.forEach((file) => {
                 formData.append('files', file);
             });
 
             await axios.post('http://localhost:8080/api/products', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+                    'Content-Type': 'multipart/form-data',
+                },
             });
 
             navigate('/');
         } catch (err) {
-            setError(err.response?.data || 'Có lỗi xảy ra khi thêm sản phẩm');
+            setError(err.response?.data || 'An error occurred while adding the product');
             setSaving(false);
         }
     };
 
-    // Cleanup function for previews
     useEffect(() => {
         return () => {
-            previews.forEach(preview => URL.revokeObjectURL(preview));
+            previews.forEach((preview) => URL.revokeObjectURL(preview));
         };
     }, [previews]);
 
     return (
         <div className="add-product">
             <div className="add-product-header">
-                <h2>Thêm sản phẩm mới</h2>
+                <h2 className="text-center">New Product</h2>
                 <Link to="/" className="back-link tooltip">
-                    <FaArrowLeft /> Quay lại
-                    <span className="tooltip-text">Quay về trang danh sách</span>
+                    <FaArrowLeft /> Go Back
+                    <span className="tooltip-text">Return to product list</span>
                 </Link>
             </div>
 
@@ -126,64 +121,66 @@ function AddProduct() {
 
             <form onSubmit={handleSubmit} className="add-form">
                 <div className="form-group">
-                    <label htmlFor="name">Tên sản phẩm:</label>
+                    <label htmlFor="name">Product Name:</label>
                     <input
                         type="text"
                         id="name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="Nhập tên sản phẩm"
+                        placeholder="Enter product name"
                         required
                     />
                 </div>
 
                 <div className="form-row">
                     <div className="form-group">
-                        <label htmlFor="price">Giá:</label>
+                        <label htmlFor="price">Price:</label>
                         <input
                             type="number"
                             id="price"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
-                            placeholder="Nhập giá"
+                            placeholder="Enter price"
                             required
                         />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="quantity">Số lượng:</label>
+                        <label htmlFor="quantity">Quantity:</label>
                         <input
                             type="number"
                             id="quantity"
                             value={quantity}
                             onChange={(e) => setQuantity(e.target.value)}
-                            placeholder="Nhập số lượng"
+                            placeholder="Enter quantity"
                             required
                         />
                     </div>
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="category">Danh mục:</label>
+                    <label htmlFor="category">Category:</label>
                     <div className="category-input-group">
                         <select
                             value={showCustomInput ? 'custom' : category}
                             onChange={handleCategoryChange}
                             className="category-select"
                         >
-                            <option value="">Chọn danh mục</option>
+                            <option value="">Select category</option>
                             {categories.map((cat, index) => (
-                                <option key={index} value={cat}>{cat}</option>
+                                <option key={index} value={cat.id}>
+                                    {cat.name}
+                                </option>
                             ))}
-                            <option value="custom">+ Thêm danh mục mới</option>
+                            <option value="custom">+ Add new category</option>
                         </select>
-                        
+
                         {showCustomInput && (
                             <input
                                 type="text"
                                 value={customCategory}
                                 onChange={handleCustomCategoryChange}
-                                placeholder="Nhập tên danh mục mới"
+                                placeholder="Enter new category name"
                                 className="custom-category-input"
                             />
                         )}
@@ -191,19 +188,19 @@ function AddProduct() {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="description">Mô tả:</label>
+                    <label htmlFor="description">Description:</label>
                     <textarea
                         id="description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        placeholder="Nhập mô tả sản phẩm"
+                        placeholder="Enter product description"
                         rows="5"
                         required
                     />
                 </div>
 
                 <div className="form-group">
-                    <label>Hình ảnh:</label>
+                    <label>Images:</label>
                     <div className="image-upload-container">
                         <div className="preview-container">
                             {previews.map((preview, index) => (
@@ -223,10 +220,10 @@ function AddProduct() {
                                 </div>
                             ))}
                         </div>
-                        
+
                         <label className="upload-button tooltip">
-                            <FaImage /> Thêm ảnh
-                            <span className="tooltip-text">Chọn nhiều ảnh để tải lên</span>
+                            <FaImage /> Add Image
+                            <span className="tooltip-text">Select multiple images to upload</span>
                             <input
                                 type="file"
                                 multiple
@@ -238,16 +235,10 @@ function AddProduct() {
                     </div>
                 </div>
 
-                <button 
-                    type="submit" 
-                    className={`save-button ${saving ? 'saving' : ''} tooltip`}
-                    disabled={saving}
-                >
+                {/* Submit Button */}
+                <button type="submit" className="submit-btn">
                     <FaSave />
-                    {saving ? 'Đang lưu...' : 'Lưu sản phẩm'}
-                    <span className="tooltip-text">
-                        {saving ? 'Đang xử lý...' : 'Lưu thông tin sản phẩm'}
-                    </span>
+                    Save Product
                 </button>
             </form>
         </div>
